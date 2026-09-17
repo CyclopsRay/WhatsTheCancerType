@@ -11,6 +11,10 @@ precancer profiling and audits the published supplementary sample counts.
 
 ## Start here
 
+- [Working roadmap](ROADMAP.md) and [ten-week plan](PLAN.md)
+- [Current project scope and spatial feasibility](record/004_roadmap_scope/README.md)
+- [Personal writing worksheet](ROADMAP_WORKSHEET.md) — planning prompts; each
+  student independently writes and types their course submission
 - [First paper review](record/001_temporal_recording/README.md)
 - [Research record index](record/README.md)
 - [Weekly results](report/09_18_report.md) and [discussion](report/09_18_record.md)

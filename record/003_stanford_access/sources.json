@@ -1,0 +1,11 @@
+{
+  "checked_date": "2026-09-17",
+  "scope": "Becker et al. 2022, GSE201349, not every dataset produced by Stanford",
+  "sources": [
+    {"file": "family.soft.gz", "sha256": "bfaf66e01ff205211e5dcecb18f07942b85001050a4cb03c0baede0c9dca0e12", "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE201nnn/GSE201349/soft/GSE201349_family.soft.gz"},
+    {"file": "rna_runs.tsv", "sha256": "e4cf702e5be5876f3889e09914978647f03f10fe204ba10d677eb26ea98b2961", "url": "https://www.ebi.ac.uk/ena/portal/api/filereport?accession=PRJNA830914&result=read_run&fields=run_accession,experiment_accession,sample_accession,library_strategy,fastq_ftp,fastq_bytes,sra_ftp,sra_bytes&format=tsv"},
+    {"file": "atac_runs.tsv", "sha256": "2d54fb0c35ab332503d62fbd087344d7bf333be277333b92dc5410133e52c715", "url": "https://www.ebi.ac.uk/ena/portal/api/filereport?accession=PRJNA830903&result=read_run&fields=run_accession,experiment_accession,sample_accession,library_strategy,fastq_ftp,fastq_bytes,sra_ftp,sra_bytes&format=tsv"},
+    {"file": "rna_layout.tsv", "sha256": "15e227f951a00aa2e9a1472cb5463ac71fc2feb8bfab31fc05113a5cb942876a", "url": "https://www.ebi.ac.uk/ena/portal/api/filereport?accession=PRJNA830914&result=read_run&fields=run_accession,library_layout,library_strategy,submitted_ftp,submitted_format,read_count&format=tsv"},
+    {"file": "metadata.xlsx", "sha256": "109d32498e506be798535d13f4360c0e0d8f26a0be6abbb9f4ca757651f1240a", "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41588-022-01088-x/MediaObjects/41588_2022_1088_MOESM3_ESM.xlsx"}
+  ]
+}

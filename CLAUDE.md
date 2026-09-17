@@ -5,6 +5,14 @@
 Initial work reviews the HTAN Vanderbilt colorectal precancer study by Islam
 et al. (2024). Start at `record/001_temporal_recording/README.md` for the paper,
 assays, source links, and reproducible inspection commands.
+Current planning also considers Stanford's RNA cohort for a ten-week study of
+normal/adenoma/CRC states; see `record/002_dataset_choice/README.md` and `PLAN.md`.
+Vanderbilt RNA is the current primary candidate. Latest subtype and spatial
+feasibility evidence is in `record/004_roadmap_scope/README.md`; earlier Stanford
+primary recommendations are historical. Internal planning files are AI-assisted
+notes, not prose for either student's manually written submission.
+HTA11 DNA Level 3 is unavailable to the user. Assignment writing constraints are
+recorded in `KNOWLEDGE.md`; `ROADMAP_WORKSHEET.md` is a planning aid, not a submission.
 
 ## Layout and commands
 
@@ -13,6 +21,8 @@ assays, source links, and reproducible inspection commands.
 - `report/`: weekly decisions and measured results, eligible for git tracking.
 - `python3 scripts/fetch_paper_sources.py --download`: retrieve public supplements.
 - `python3 scripts/audit_table4.py`: recount downloaded Supplementary Table 4.
+- `python3 scripts/audit_stanford_access.py --help`: inventory and bounded
+  per-file access checks; see `record/003_stanford_access/README.md` for inputs.
 - `bash scripts/ensure_week.sh`: select/create this week's report pair before writing.
 
 Utilities use Python 3 standard library and curl; the reporting wrapper calls

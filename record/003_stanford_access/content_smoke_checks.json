@@ -1,0 +1,10 @@
+{
+  "checked_date_utc": "2026-09-17",
+  "method": "Anonymous GET bytes=0-65535; read at most 65536 bytes, decompress at most 1024 bytes in memory",
+  "checks": [
+    {"gsm": "GSM6061645", "kind": "RNA processed matrix", "http": 206, "gzip_magic": "1f8b", "format": "MatrixMarket matrix coordinate integer general"},
+    {"gsm": "GSM6058770", "kind": "ATAC fragments", "http": 206, "gzip_magic": "1f8b", "format": "Tab-separated chromosome, start, end, cell barcode, count"},
+    {"gsm": "GSM6061705", "run": "SRR18899422", "kind": "RNA FASTQ", "http": 206, "gzip_magic": "1f8b", "format": "FASTQ record header beginning @SRR18899422.1; read-name suffix /2"}
+  ],
+  "limitations": "Representative format checks only; no full files stored and no whole-file integrity verification. The FASTQ observation does not establish technical/barcode-read completeness."
+}

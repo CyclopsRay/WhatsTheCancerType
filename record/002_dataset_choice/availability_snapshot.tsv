@@ -1,0 +1,15 @@
+assay_level	controlled_CRDC_GC_SB_CGC_files	open_CRDC_GC_SB_CGC_files	open_Synapse_files	interpretation
+10X Visium Auxiliary	0	0	40	User screenshot; file counts, not specimens
+10X Visium Level 1	80	0	0	User screenshot; file counts, not specimens
+10X Visium Level 2	40	0	0	User screenshot; file counts, not specimens
+10X Visium Level 3	0	0	160	Listed open; effective access and matching not tested
+10X Visium Level 4	0	0	40	Listed open; effective access and matching not tested
+Bulk DNA Level 1	654	0	0	Controlled access
+Bulk DNA Level 2	327	0	0	Controlled access
+Bulk DNA Level 3	0	0	220	UNAVAILABLE to user as of 2026-09-17 for governance reasons despite listed open status
+H&E Level 2	0	18	0	Listed open; effective access and matching not tested
+MxIF Level 2	0	126	0	Listed open; effective access and matching not tested
+scRNA-seq Level 1	253	0	0	Controlled access
+scRNA-seq Level 2	139	0	0	Controlled access
+scRNA-seq Level 3	0	0	224	Listed open; effective access and matching not tested
+scRNA-seq Level 4	0	0	6	Listed open; effective access and matching not tested

@@ -1,0 +1,69 @@
+{
+  "generated_utc": "2026-09-17T19:10:31.203754+00:00",
+  "manifest_files": 644,
+  "checked_files": 644,
+  "initial_range_passed": 621,
+  "recheck_attempts": 23,
+  "total_bytes_transferred": 3477,
+  "groups": [
+    {
+      "kind": "processed",
+      "assay": "ATAC-seq",
+      "files": 178,
+      "libraries": 89,
+      "range_passed": 178,
+      "file_bytes_from_content_range": 124942366931
+    },
+    {
+      "kind": "processed",
+      "assay": "RNA-Seq",
+      "files": 216,
+      "libraries": 72,
+      "range_passed": 216,
+      "file_bytes_from_content_range": 1307185264
+    },
+    {
+      "kind": "raw_fastq",
+      "assay": "ATAC-seq",
+      "files": 178,
+      "libraries": 89,
+      "range_passed": 178,
+      "file_bytes_from_content_range": 1393763143605
+    },
+    {
+      "kind": "raw_fastq",
+      "assay": "RNA-Seq",
+      "files": 72,
+      "libraries": 72,
+      "range_passed": 72,
+      "file_bytes_from_content_range": 660100599704
+    }
+  ],
+  "supplementary_metadata_mappings": [
+    {
+      "sheet": "TableS3",
+      "column": "E",
+      "unique_titles": 80,
+      "missing_from_geo": []
+    },
+    {
+      "sheet": "TableS3",
+      "column": "F",
+      "unique_titles": 64,
+      "missing_from_geo": []
+    },
+    {
+      "sheet": "TableS4",
+      "column": "E",
+      "unique_titles": 9,
+      "missing_from_geo": []
+    },
+    {
+      "sheet": "TableS5",
+      "column": "D",
+      "unique_titles": 8,
+      "missing_from_geo": []
+    }
+  ],
+  "scope": "Anonymous two-byte GET access, not whole-file integrity or barcode-read completeness; WGS not verified."
+}

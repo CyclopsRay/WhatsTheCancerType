@@ -1,0 +1,4 @@
+checked_date_UTC	resource	method	http_status	url	limitations
+2026-09-17	GSE201348 processed matrix archive	curl HEAD with redirects	200	https://ftp.ncbi.nlm.nih.gov/geo/series/GSE201nnn/GSE201348/suppl/GSE201348_RAW.tar	Endpoint reachable; archive not downloaded or parsed
+2026-09-17	GSE132465 UMI count matrix	curl HEAD with redirects	200	https://ftp.ncbi.nlm.nih.gov/geo/series/GSE132nnn/GSE132465/suppl/GSE132465_GEO_processed_CRC_10X_raw_UMI_count_matrix.txt.gz	Endpoint reachable; matrix not downloaded or parsed
+2026-09-17	GSE132465 cell annotation	curl HEAD with redirects	200	https://ftp.ncbi.nlm.nih.gov/geo/series/GSE132nnn/GSE132465/suppl/GSE132465_GEO_processed_CRC_10X_cell_annotation.txt.gz	Endpoint reachable; metadata not downloaded or parsed
