@@ -1,0 +1,49 @@
+{
+  "source": "/home/yuqi.lei/HTA11/record/001_temporal_recording/sources/table4.xlsx",
+  "source_sha256": "9285f9b3063d4c87bc5a391c9f229e80261eb89f499c2d4ff4c91b7c06a3e3a1",
+  "audited_at_utc": "2026-09-17T18:26:59.294663+00:00",
+  "cohort": {
+    "rows": 116,
+    "unique_participant_ids": 95,
+    "sample_types": {
+      "SER": 42,
+      "AD": 70,
+      "Not stated": 4
+    }
+  },
+  "human_wes": {
+    "rows": 96,
+    "sample_types": {
+      "AD": 63,
+      "SER": 33
+    },
+    "apc": {
+      "n_with_count": 96,
+      "n_at_least_3": 14,
+      "percent_at_least_3": 14.583333333333334
+    }
+  },
+  "tcps": {
+    "rows": 300,
+    "apc": {
+      "n_with_count": 300,
+      "n_at_least_3": 57,
+      "percent_at_least_3": 19.0
+    }
+  },
+  "scrna_analysis_sheet": {
+    "rows": 121,
+    "unique_specimen_ids": 114,
+    "rows_with_numeric_median_vaf": 86,
+    "note": "Analysis-sheet rows are not automatically unique cohort specimens."
+  },
+  "mouse_wes": {
+    "rows": 13,
+    "apc": {
+      "n_with_count": 13,
+      "n_at_least_3": 5,
+      "percent_at_least_3": 38.46153846153846
+    }
+  },
+  "scope": "Counts from supplied metadata; no raw reads or variant calls reprocessed."
+}
