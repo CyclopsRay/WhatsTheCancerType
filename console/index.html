@@ -78,6 +78,12 @@ a { color: var(--hema); }
     <div class="deadlines" id="deadlines"></div>
   </section>
 
+  <section class="panel">
+    <h2>Midterm readiness</h2>
+    <p class="sub" id="verdict"></p>
+    <div class="tbl"><table id="ready"></table></div>
+  </section>
+
   <section>
     <h2>Arms</h2>
     <div class="legend" id="legend"></div>
@@ -109,11 +115,24 @@ a { color: var(--hema); }
 
 <script>
 // ---- Data: edit these arrays on every project change ----
-const UPDATED = "2026-10-19 13:30 Dubai";
+const UPDATED = "2026-10-19 18:15 Dubai";
 const DEADLINES = [
   { what: "Midterm talk, 3–5 min", when: "Tue 2026-10-20 or Thu 2026-10-22", date: "2026-10-20" },
   { what: "Progress report, ≤1500 words, ≤5 figs", when: "Sat 2026-10-24", date: "2026-10-24" },
   { what: "Meet an instructor on feasibility", when: "before the talk if possible", date: null },
+];
+const VERDICT = "Enough for the midterm. All six required items are covered with real results from both donor cohorts. The gaps below are the expected questions, not blockers.";
+const READY = [
+  ["1 · Background and motivation", "done", "Two routes into polyps; slide 2"],
+  ["2 · Research question", "done", "Shared vs route-specific, within donor; slide 2"],
+  ["3 · Exact data, inspected", "done", "Raw counts, 122,811 cells, 11+8 / 9+6 paired donors; MxIF tables found empty; slide 3"],
+  ["4 · Specific analyses", "done", "Every step a standard method; slide 4"],
+  ["5 · Preliminary results, feasibility", "done", "Composition, DESeq2 route split, 97–99% replication, Visium crossover; slides 5–7"],
+  ["6 · Next steps", "done", "Slide 8, with what we will not claim"],
+  ["Likely question: are the cell labels trustworthy?", "next", "Published labels used as-is; marker check not run yet"],
+  ["Likely question: composition vs expression?", "next", "All-epithelium DE mixes both; within-state fits exist, route split per state pending"],
+  ["Likely question: power?", "next", "6–11 donors per cohort fit; pooled 19 / 15 fit not run yet"],
+  ["Before the talk", "next", "Sign up for Tue/Thu · meet an instructor · rehearse to 4 min · each student in own words"],
 ];
 const STATUS = { done: "done", running: "running", next: "next", blocked: "blocked", parked: "parked", dropped: "dropped" };
 const ARMS = [
@@ -164,6 +183,7 @@ const JOBS = [
   ["325109", "Visium scoring", "COMPLETED"],
 ];
 const LOG = [
+  ["10-19 18:15", "Pushed to GitHub: branch midterm-feasibility, commit 434ccc9 (50 files). Not yet merged into main. Midterm readiness panel added."],
   ["10-19 13:30", "VAL replication and Visium crossover in. Midterm deck finished. Report, record, KNOWLEDGE, PLAN, ONGOING updated."],
   ["10-19 12:55", "DIS results in: composition, DE, route split, GSEA. Two script bugs fixed. Slide deck created."],
   ["10-19 12:35", "Console opened. MxIF gate failed, Visium fallback downloaded, paired analysis submitted."],
@@ -178,6 +198,8 @@ $("deadlines").innerHTML = DEADLINES.map(x => {
   if (x.date) { const d = Math.ceil((new Date(x.date + "T18:00:00+04:00") - today) / 864e5); left = d >= 0 ? `<span class="left">${d === 0 ? "today" : d + " day" + (d === 1 ? "" : "s") + " left"}</span>` : ""; }
   return `<div class="dl"><b>${x.what}</b><span>${x.when}</span>${left}</div>`;
 }).join("");
+$("verdict").textContent = VERDICT;
+$("ready").innerHTML = `<tr><th>Item</th><th>State</th><th>Evidence</th></tr>` + READY.map(r => `<tr><td>${r[0]}</td><td><span class="pill s-${r[1]}">${r[1] === "done" ? "covered" : "open"}</span></td><td>${r[2]}</td></tr>`).join("");
 const counts = ARMS.reduce((a, x) => (a[x.st] = (a[x.st] || 0) + 1, a), {});
 $("legend").innerHTML = Object.keys(STATUS).filter(k => counts[k]).map(k => `<span class="pill s-${k}">${STATUS[k]} · ${counts[k]}</span>`).join("");
 $("arms").innerHTML = ARMS.map(a => `<div class="arm"><div class="id">${a.id}</div><div class="name">${a.name}<small>${a.sub}</small></div><div class="st"><span class="pill s-${a.st}">${STATUS[a.st]}</span></div><div class="detail">${a.d}</div></div>`).join("");
