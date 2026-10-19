@@ -1,0 +1,191 @@
+<title>HTA11 Arms Console</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a bench sheet. Deadline strip, then one row per analysis arm, then gates and jobs. Hematoxylin + eosin as the stain palette. */
+:root {
+  --bg: #f7f6f9; --surface: #ffffff; --ink: #1d1a29; --ink-2: #4f4a60; --muted: #7b7690;
+  --line: #e2dfea; --hema: #4a3d8f; --eosin: #c4476f;
+  --ok: #1f7a4a; --ok-bg: #e3f3ea; --run: #1f5fb8; --run-bg: #e3ecfa; --warn: #9a6400; --warn-bg: #fbf0d9;
+  --bad: #b3261e; --bad-bg: #fbe5e3; --idle: #6b6780; --idle-bg: #ecebf1;
+  --f-display: "Newsreader", Georgia, serif; --f-body: "Public Sans", system-ui, sans-serif; --f-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #15131c; --surface: #1d1a27; --ink: #eeecf4; --ink-2: #c0bbd0; --muted: #8f8aa3; --line: #2f2b3d;
+  --hema: #a99cf0; --eosin: #ec86a6;
+  --ok: #6fd39c; --ok-bg: #173325; --run: #8cb6f5; --run-bg: #19273d; --warn: #e8b85a; --warn-bg: #352a14;
+  --bad: #f08a83; --bad-bg: #3a1c1a; --idle: #a5a1b8; --idle-bg: #262333; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #15131c; --surface: #1d1a27; --ink: #eeecf4; --ink-2: #c0bbd0; --muted: #8f8aa3; --line: #2f2b3d;
+  --hema: #a99cf0; --eosin: #ec86a6;
+  --ok: #6fd39c; --ok-bg: #173325; --run: #8cb6f5; --run-bg: #19273d; --warn: #e8b85a; --warn-bg: #352a14;
+  --bad: #f08a83; --bad-bg: #3a1c1a; --idle: #a5a1b8; --idle-bg: #262333; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-block: 28px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font: 500 12px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--eosin); }
+h1 { font: 600 34px/1.1 var(--f-display); margin: 0; text-wrap: balance; }
+.sub { color: var(--ink-2); max-width: 68ch; margin: 0; }
+.stamp { font: 400 12px/1.4 var(--f-mono); color: var(--muted); }
+h2 { font: 600 20px/1.2 var(--f-display); margin: 0 0 10px; }
+.deadlines { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.dl { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: grid; gap: 2px; }
+.dl b { font: 600 15px/1.3 var(--f-body); }
+.dl span { font: 400 12px/1.4 var(--f-mono); color: var(--muted); }
+.dl .left { color: var(--eosin); font-weight: 500; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 500 12px/1 var(--f-mono); padding: 5px 9px; border-radius: 999px; white-space: nowrap; }
+.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.s-done { color: var(--ok); background: var(--ok-bg); } .s-running { color: var(--run); background: var(--run-bg); }
+.s-next { color: var(--idle); background: var(--idle-bg); } .s-blocked { color: var(--bad); background: var(--bad-bg); }
+.s-dropped { color: var(--bad); background: var(--bad-bg); } .s-parked { color: var(--warn); background: var(--warn-bg); }
+.s-dropped::before { border-radius: 1px; } .s-parked::before { border-radius: 1px; }
+.arms { display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.arm { display: grid; grid-template-columns: 52px minmax(0, 1.1fr) 110px minmax(0, 2fr); gap: 14px; padding: 14px 16px; border-top: 1px solid var(--line); align-items: start; }
+.arm:first-child { border-top: 0; }
+.arm .id { font: 500 13px/1.4 var(--f-mono); color: var(--hema); }
+.arm .name { font-weight: 600; }
+.arm .name small { display: block; font-weight: 400; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+.arm .detail { color: var(--ink-2); font-size: 14px; min-width: 0; }
+.arm .detail code, .mono { font-family: var(--f-mono); font-size: 12.5px; }
+.arm .detail .num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+@media (max-width: 720px) { .arm { grid-template-columns: 44px minmax(0, 1fr); } .arm .st { grid-column: 2; } .arm .detail { grid-column: 1 / -1; } }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+th { text-align: left; font: 500 11.5px/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 6px 8px 6px 0; border-bottom: 1px solid var(--line); }
+td { padding: 7px 8px 7px 0; border-bottom: 1px solid var(--line); vertical-align: top; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+.tbl { overflow-x: auto; }
+.log { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.log li { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; font-size: 14px; }
+.log time { font: 400 12px/1.6 var(--f-mono); color: var(--muted); }
+a { color: var(--hema); }
+:focus-visible { outline: 2px solid var(--eosin); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">HTA11 · WhatsTheCancerType · Yuqi Lei &amp; Muhammed Bah</div>
+    <h1>Polyp vs matched normal, by route</h1>
+    <p class="sub">Every open analysis arm and its state. Updated by Claude after each change to the project; numbers link back to the weekly report <span class="mono">report/10_23_report.md</span>.</p>
+    <div class="stamp" id="stamp"></div>
+  </header>
+
+  <section>
+    <h2>Deadlines</h2>
+    <div class="deadlines" id="deadlines"></div>
+  </section>
+
+  <section>
+    <h2>Arms</h2>
+    <div class="legend" id="legend"></div>
+    <div class="arms" id="arms"></div>
+  </section>
+
+  <section class="two">
+    <div class="panel">
+      <h2>Cohort we hold</h2>
+      <div class="tbl"><table id="cohort"></table></div>
+    </div>
+    <div class="panel">
+      <h2>Gates</h2>
+      <div class="tbl"><table id="gates"></table></div>
+    </div>
+  </section>
+
+  <section class="two">
+    <div class="panel">
+      <h2>Slurm jobs</h2>
+      <div class="tbl"><table id="jobs"></table></div>
+    </div>
+    <div class="panel">
+      <h2>Change log</h2>
+      <ul class="log" id="log"></ul>
+    </div>
+  </section>
+</div>
+
+<script>
+// ---- Data: edit these arrays on every project change ----
+const UPDATED = "2026-10-19 13:30 Dubai";
+const DEADLINES = [
+  { what: "Midterm talk, 3–5 min", when: "Tue 2026-10-20 or Thu 2026-10-22", date: "2026-10-20" },
+  { what: "Progress report, ≤1500 words, ≤5 figs", when: "Sat 2026-10-24", date: "2026-10-24" },
+  { what: "Meet an instructor on feasibility", when: "before the talk if possible", date: null },
+];
+const STATUS = { done: "done", running: "running", next: "next", blocked: "blocked", parked: "parked", dropped: "dropped" };
+const ARMS = [
+  { id: "A0", name: "Plan from feedback", sub: "record 10_23", st: "done",
+    d: "Feedback reads as a feasibility worry about novel methods. Response: run the standard core end to end; OT and any marker-selection model become optional." },
+  { id: "A1", name: "Data inspection", sub: "obs + raw counts", st: "done",
+    d: "Both epithelial H5ADs carry raw integer counts in <code>raw/X</code> and the Chen 2021 <code>Cell_Type</code> labels, incl. lesion states ASC and SSC. Pseudobulk built: DIS <span class=num>62</span> specimens, VAL <span class=num>59</span>." },
+  { id: "A2", name: "Paired state composition", sub: "Wilcoxon, donor unit", st: "done",
+    d: "ASC share rises within donor in <span class=num>10/11</span> DIS and <span class=num>6/8</span> VAL conventional donors; SSC in <span class=num>7/9</span> DIS and <span class=num>6/6</span> VAL serrated donors. HP carries SSC like SSL (median 17–22% vs 16–23%), which supports pooling HP with SSL." },
+  { id: "A3", name: "Paired pseudobulk DE", sub: "PyDESeq2 ~ donor + condition", st: "done",
+    d: "All-epithelium, padj&lt;0.05 and |log2FC|&gt;1. DIS: conventional <span class=num>11</span> donors <span class=num>507↑ 220↓</span>, serrated <span class=num>9</span> donors <span class=num>483↑ 163↓</span>. VAL: conventional <span class=num>8</span> donors <span class=num>786↑ 621↓</span>, serrated <span class=num>6</span> donors <span class=num>504↑ 153↓</span>. Within-state ABS/GOB/TAC fits done in both. Next: pooled fit, state-level route split." },
+  { id: "A4", name: "Shared vs route-specific", sub: "LFC compare + difference z", st: "done",
+    d: "DIS: <span class=num>224</span> shared (MUC5AC, REG4, CLDN2, S100P up; AQP8, CLCA4, ZG16 down), <span class=num>53</span> conventional-specific (Wnt targets APCDD1, NKD1, ASCL2, MMP7), <span class=num>68</span> serrated-specific (TFF1, TFF2, ANXA1: gastric metaplasia), <span class=num>3</span> opposite. Hallmark Wnt/β-catenin up only in conventional." },
+  { id: "A5", name: "Replication + donor consistency", sub: "DIS → VAL, donor-disjoint", st: "done",
+    d: "DIS hits keep their sign in VAL: <span class=num>98.9%</span> conventional (662), <span class=num>97.4%</span> serrated (615). Shared genes: 100% same direction in both routes in VAL; route-specific genes 92–95% larger in own route (strict re-significance 35–44%). Donor consistency: median gene agrees in <span class=num>82%</span> / <span class=num>89%</span> of donors. Wnt up in conventional, TNF-α/NF-κB up in serrated, in both cohorts." },
+  { id: "A6", name: "Spatial endpoint", sub: "Visium polyp captures", st: "done",
+    d: "MxIF dropped (OSF tables are 0 bytes). Visium, 4 sections with lesion and normal spots: conventional signature AUC <span class=num>0.64 / 0.63</span> on TA sections only; serrated signature <span class=num>0.62 / 0.96</span> on SSL/HP sections only. Descriptive: spots are pseudo-replicates. Next: all 7 sections, section as unit." },
+  { id: "A7", name: "Genotype extension", sub: "WES VCFs on Synapse", st: "parked",
+    d: "Synapse still blocked; OSF WES MAF covers the spatial cohort, not our scRNA donors." },
+  { id: "A8", name: "Midterm slides", sub: "3–5 min", st: "done", d: "8 slides with speaker notes: <a href=\"https://claude.ai/artifact/VVPjMSC6a5dnFAbnEYHG7G\">open the deck</a>. Sources mirrored in <code>presentation/</code>." },
+  { id: "A10", name: "Open checks", sub: "before the report", st: "next", d: "Marker check of Cell_Type labels · DIS mito fraction (median 37–44%) · why 2/9 DIS serrated donors have ~0 SSC · pooled DIS+VAL fit (19 / 15 donors)." },
+  { id: "A9", name: "Progress report", sub: "due Sat 10-24", st: "next", d: "Each student writes their own text; figures and numbers from this console." },
+  { id: "—", name: "OT correspondence", sub: "moscot", st: "parked",
+    d: "Optional. The ASC/SSC labels answer new-vs-redistributed at first pass." },
+  { id: "—", name: "MxIF quantification", sub: "OSF hftq2", st: "dropped",
+    d: "Files are empty (md5 d41d8cd9…). Would need whole-slide segmentation." },
+];
+const COHORT = [
+  ["", "DIS", "VAL"],
+  ["Specimens / donors", "62 / 30", "59 / 26"],
+  ["Paired normal + conventional", "11", "8"],
+  ["Paired normal + serrated", "9", "6"],
+  ["Pooled paired (DIS+VAL)", "19 conventional", "15 serrated"],
+  ["Donor overlap DIS∩VAL", "1", ""],
+];
+const GATES = [
+  ["Cohort: obs joins donor + pathology", "passed", "2026-09-18"],
+  ["Spatial: MxIF tables usable", "failed", "2026-10-19"],
+  ["Spatial fallback: Visium polyp captures", "passed", "2026-10-19"],
+  ["Genotype: VCF spot-check", "blocked", "Synapse"],
+];
+const JOBS = [
+  ["325071", "pseudobulk build", "COMPLETED"],
+  ["325099", "OSF subset download", "COMPLETED"],
+  ["325100", "paired analysis", "FAILED"],
+  ["325106", "paired analysis, retry", "FAILED"],
+  ["325107", "paired analysis, fixed", "COMPLETED"],
+  ["325109", "Visium scoring", "COMPLETED"],
+];
+const LOG = [
+  ["10-19 13:30", "VAL replication and Visium crossover in. Midterm deck finished. Report, record, KNOWLEDGE, PLAN, ONGOING updated."],
+  ["10-19 12:55", "DIS results in: composition, DE, route split, GSEA. Two script bugs fixed. Slide deck created."],
+  ["10-19 12:35", "Console opened. MxIF gate failed, Visium fallback downloaded, paired analysis submitted."],
+];
+
+// ---- Render ----
+const $ = (id) => document.getElementById(id);
+$("stamp").textContent = "Last updated " + UPDATED;
+const today = new Date();
+$("deadlines").innerHTML = DEADLINES.map(x => {
+  let left = "";
+  if (x.date) { const d = Math.ceil((new Date(x.date + "T18:00:00+04:00") - today) / 864e5); left = d >= 0 ? `<span class="left">${d === 0 ? "today" : d + " day" + (d === 1 ? "" : "s") + " left"}</span>` : ""; }
+  return `<div class="dl"><b>${x.what}</b><span>${x.when}</span>${left}</div>`;
+}).join("");
+const counts = ARMS.reduce((a, x) => (a[x.st] = (a[x.st] || 0) + 1, a), {});
+$("legend").innerHTML = Object.keys(STATUS).filter(k => counts[k]).map(k => `<span class="pill s-${k}">${STATUS[k]} · ${counts[k]}</span>`).join("");
+$("arms").innerHTML = ARMS.map(a => `<div class="arm"><div class="id">${a.id}</div><div class="name">${a.name}<small>${a.sub}</small></div><div class="st"><span class="pill s-${a.st}">${STATUS[a.st]}</span></div><div class="detail">${a.d}</div></div>`).join("");
+const table = (rows, head) => (head ? `<tr>${rows[0].map(h => `<th>${h}</th>`).join("")}</tr>` : "") + rows.slice(head ? 1 : 0).map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("");
+$("cohort").innerHTML = table(COHORT, true);
+const gateCls = { passed: "done", failed: "dropped", blocked: "blocked" };
+$("gates").innerHTML = `<tr><th>Gate</th><th>Result</th><th>When</th></tr>` + GATES.map(g => `<tr><td>${g[0]}</td><td><span class="pill s-${gateCls[g[1]]}">${g[1]}</span></td><td class="mono">${g[2]}</td></tr>`).join("");
+const jobCls = { COMPLETED: "done", RUNNING: "running", PENDING: "next", FAILED: "dropped" };
+$("jobs").innerHTML = `<tr><th>Job</th><th>What</th><th>State</th></tr>` + JOBS.map(j => `<tr><td class="mono">${j[0]}</td><td>${j[1]}</td><td><span class="pill s-${jobCls[j[2]]}">${j[2].toLowerCase()}</span></td></tr>`).join("");
+$("log").innerHTML = LOG.map(l => `<li><time>${l[0]}</time><span>${l[1]}</span></li>`).join("");
+</script>

@@ -5,14 +5,18 @@
 Initial work reviews the HTAN Vanderbilt colorectal precancer study by Islam
 et al. (2024). Start at `record/001_temporal_recording/README.md` for the paper,
 assays, source links, and reproducible inspection commands.
-Current planning also considers Stanford's RNA cohort for a ten-week study of
-normal/adenoma/CRC states; see `record/002_dataset_choice/README.md` and `PLAN.md`.
-Vanderbilt RNA is the current primary candidate. Latest subtype and spatial
-feasibility evidence is in `record/004_roadmap_scope/README.md`; earlier Stanford
-primary recommendations are historical. Internal planning files are AI-assisted
-notes, not prose for either student's manually written submission.
-HTA11 DNA Level 3 is unavailable to the user. Assignment writing constraints are
-recorded in `KNOWLEDGE.md`; `ROADMAP_WORKSHEET.md` is a planning aid, not a submission.
+Scope was fixed on 2026-09-18: HTA11 only, within-donor polyp versus matched
+normal mucosa, conditioned on conventional/serrated route, with driver genotype
+as a droppable extension. See [ROADMAP.md](ROADMAP.md) and `PLAN.md`. Access and
+cohort evidence is in `record/005_open_access_audit/README.md`; earlier Stanford
+primary recommendations and the three-stage normal/adenoma/CRC framing in
+`record/002_dataset_choice/` and `record/004_roadmap_scope/` are historical.
+**HTA11 Bulk DNA Level 3 (253 exome VCFs) is open on Synapse** — the earlier
+"DNA unavailable" note was wrong and is corrected in `KNOWLEDGE.md`. Only Level
+1/2 raw sequencing needs a dbGaP request, and the project does not use it.
+Internal planning files are AI-assisted notes, not prose for either student's
+manually written submission. Assignment writing constraints are recorded in
+`KNOWLEDGE.md`; `ROADMAP_WORKSHEET.md` is a planning aid, not a submission.
 
 ## Layout and commands
 
@@ -24,6 +28,17 @@ recorded in `KNOWLEDGE.md`; `ROADMAP_WORKSHEET.md` is a planning aid, not a subm
 - `python3 scripts/audit_stanford_access.py --help`: inventory and bounded
   per-file access checks; see `record/003_stanford_access/README.md` for inputs.
 - `bash scripts/ensure_week.sh`: select/create this week's report pair before writing.
+- Analysis pipeline (Slurm, `cscc-cpu-p` / `cscc-cpu-qos`): `sbatch scripts/build_pseudobulk.sh`,
+  `sbatch scripts/paired_analysis.sh`, `sbatch scripts/visium_scoring.sh`; figures with
+  `/l/users/$USER/venvs/hta11/bin/python scripts/make_figures.py /l/users/$USER/HTA11/derived figures`.
+  Order and outputs: [record 006](record/006_feasibility/README.md).
+- Project analysis env: `/l/users/$USER/venvs/hta11` (scanpy + PyDESeq2 + gseapy). No R, no node.
+- Arms console artifact: `console/index.html` → https://claude.ai/artifact/EAd4sS1nSVmPepYoRBhZpF.
+  Update the data arrays at the top and republish after every project change.
+  Midterm deck: https://claude.ai/artifact/VVPjMSC6a5dnFAbnEYHG7G (sources in `presentation/`).
+- `/l/users/$USER/venvs/hta11-doc/bin/python scripts/md_to_pdf.py FILE.md`: render a
+  planning document to PDF. Handles headings, paragraphs and lists only, not
+  tables. The venv holds `fpdf2` and `pypdf`; the analysis env is `/l/users/$USER/venvs/hta11`.
 
 Utilities use Python 3 standard library and curl; the reporting wrapper calls
 `/home/yuqi.lei/.local/bin/research-week`. Download caches under `record/*/sources/`

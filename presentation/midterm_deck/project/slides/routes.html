@@ -1,0 +1,25 @@
+<section id="routes" data-transition="fade" style="background:#f7f6f9;color:#1d1a29;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:26px;letter-spacing:3px;text-transform:uppercase;color:#a8365c;font-weight:600">Result 2 · paired pseudobulk DESeq2</p>
+<h2 style="font-family:'Newsreader', Georgia, serif;font-size:64px;font-weight:500;line-height:1.1">A shared core, plus one program per route</h2>
+</div>
+<div style="display:flex;gap:48px;align-items:start">
+<img src="/_blob/21ec5eabbedf0e2cad7e0dd0df4ed4c8" alt="Scatter of polyp-versus-own-normal log2 fold change, conventional route on x and serrated route on y, for every gene in DIS. 224 genes are shared, 53 conventional-specific, 68 serrated-specific, 3 change in opposite directions." style="width:920px;height:594px;object-fit:contain;background:#ffffff;border-radius:12px">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:column;gap:8px;background:#ffffff;padding:24px 28px;border-left:8px solid #1baf7a;border-radius:8px">
+<h3 style="font-size:32px;font-weight:600">Shared · 224 genes</h3>
+<p style="font-size:26px;line-height:1.4;color:#4f4a60">Up MUC5AC, REG4, S100P. Down AQP8, CLCA4, ZG16: mature colonocyte genes lost</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#ffffff;padding:24px 28px;border-left:8px solid #2a78d6;border-radius:8px">
+<h3 style="font-size:32px;font-weight:600">Conventional only · 53</h3>
+<p style="font-size:26px;line-height:1.4;color:#4f4a60">Wnt targets APCDD1, NKD1, ASCL2, MMP7. Hallmark Wnt/β-catenin up</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#ffffff;padding:24px 28px;border-left:8px solid #eb6834;border-radius:8px">
+<h3 style="font-size:32px;font-weight:600">Serrated only · 68</h3>
+<p style="font-size:26px;line-height:1.4;color:#4f4a60">Gastric-like TFF1, TFF2, ANXA1. TNF-α/NF-κB and inflammatory sets up</p>
+</div>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#7b7690">DIS, 11 conventional and 9 serrated donors. padj &lt; 0.05, |log2FC| &gt; 1; route-specific also needs a significant route difference (z-test, BH &lt; 0.05).</p>
+<aside>Second result. We sum each specimen’s cells into one profile and fit DESeq2 with donor in the model, separately per route. Plotting the two routes against each other splits the genes. 224 change the same way in both routes: mucin and REG4 go up, mature colonocyte genes go down. 53 are conventional-only, and they are classic Wnt targets, which fits APC-driven adenomas. 68 are serrated-only, led by gastric-type genes like TFF1 and TFF2, which fits the known gastric metaplasia of serrated lesions. These are known biology, which tells us the pipeline recovers real signal.</aside>
+</section>

@@ -6,7 +6,9 @@ compose the answers yourself. Do not copy this worksheet or the AI-generated
 operational plan into the submission.
 
 Evidence: [dataset comparison and sources](record/002_dataset_choice/README.md).
-Latest scope: [subtypes, measurable outcomes and spatial feasibility](record/004_roadmap_scope/README.md).
+Latest scope and cohort numbers: [open-access audit](record/005_open_access_audit/README.md)
+and [ROADMAP.md](ROADMAP.md). The 2026-09-17 three-stage framing in
+[record 004](record/004_roadmap_scope/README.md) is historical.
 Schedule: [PLAN.md](PLAN.md). Confirm any mandatory multiomics/ML requirement.
 
 ## 1. Team

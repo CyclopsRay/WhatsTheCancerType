@@ -11,8 +11,9 @@ precancer profiling and audits the published supplementary sample counts.
 
 ## Start here
 
-- [Working roadmap](ROADMAP.md) and [ten-week plan](PLAN.md)
-- [Current project scope and spatial feasibility](record/004_roadmap_scope/README.md)
+- [Working roadmap](ROADMAP.md), [short version](ROADMAP_CONCISE.md) and [ten-week plan](PLAN.md)
+- [Open-access audit: what HTA11 data is obtainable, and the cohort it supports](record/005_open_access_audit/README.md)
+- [Earlier scope and spatial feasibility notes](record/004_roadmap_scope/README.md) — historical
 - [Personal writing worksheet](ROADMAP_WORKSHEET.md) — planning prompts; each
   student independently writes and types their course submission
 - [First paper review](record/001_temporal_recording/README.md)

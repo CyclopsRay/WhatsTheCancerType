@@ -1,0 +1,19 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-10-19T09:05:00Z"},
+  "lists": "css",
+  "title": "HTA11 Midterm: Polyp vs Matched Normal",
+  "order": ["cover", "question", "data", "methods", "states", "routes", "replication", "next"],
+  "sections": {
+    "s1": {"description": "Why colorectal polyps, and the question we ask of them", "start": "cover"},
+    "s2": {"description": "The data we hold and how we inspected it", "start": "data"},
+    "s3": {"description": "The analysis, built from standard tools", "start": "methods"},
+    "s4": {"description": "Preliminary results showing the analysis runs on the real data", "start": "states"},
+    "s5": {"description": "What comes next and what the design cannot claim", "start": "next"}
+  },
+  "faces": {
+    "newsreader": {"family": "Newsreader", "href": "https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap"},
+    "public-sans": {"family": "Public Sans", "href": "https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap"}
+  },
+  "designSystems": []
+}
