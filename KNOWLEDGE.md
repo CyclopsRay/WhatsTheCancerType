@@ -2,6 +2,58 @@
 
 ## Durable facts
 
+- **2026-10-23: in only two Visium captures does normal mucosa touch the polyp.** Distance from
+  each `normal_mucosa` spot to the nearest `adenoma` spot, in spot spacings (44.8 px): 8270_2
+  (10711) min 1 / median 11.5 and 8270_5 (06134) min 1 / median 4.7 are contiguous; 8270_1 (07862)
+  min 10.7 and 8270_3 (07663) min 11.3 are separate tissue pieces; the 7319 captures have no
+  normal spots. Any "does the lining next to a polyp carry its change" claim rests on 2 sections.
+- **GPU jobs:** `cscc-gpu-p` + `cscc-gpu-qos`, `--gres=gpu:1`; at most 2 running and 4 submitted
+  per user. scvi-tools 1.3.3 (incl. CondSCVI/DestVI) and torch 2.1.2/CUDA 11.8 are in the hta11 venv;
+  no POT, Tangram or cell2location. `sacct` was down on 2026-10-23 (slurmdbd refused); use `squeue`.
+
+- **Corrected 2026-10-22: all 6 Visium polyp donors (7 captures) are in our scRNA.** Visium IDs are
+  zero-padded (`HTA11_07862`), scRNA IDs are not (`HTA11_7862`); the earlier "only HTA11_10711
+  overlaps" was a string-matching error. Same person in scRNA: 08622 (VAL, SSL + normal; captures
+  7319_2/3), 01938 (DIS, TVA + 202 normal cells; 7319_4), 07862 (VAL, TA + normal; 8270_1), 10711
+  (VAL, TA only, no normal; 8270_2), 07663 (VAL, SSL + normal; 8270_3), 06134 (DIS, HP + normal;
+  8270_5). Strip leading zeros before joining.
+
+- **2026-10-22: Visium is fresh frozen, 3' poly-A (`chemistry_description` = "Spatial 3' v1"),
+  not FFPE.** Median ~1,300 UMIs / ~640 genes per spot. scRNA is TruDrop (inDrop-style 3' tags),
+  median ~2,000–2,400 genes per cell. We hold count matrices only — no reads — so SNV calling in
+  cells or spots is impossible without dbGaP Level 1/2. The OSF WES MAF covers all 7 Visium polyps
+  (`MAP.<donor>_polyp`, 100–3,584 variants each) as bulk calls; `obs["Variants"]` in ST_master is
+  that per-section count, constant across spots. The authors' per-spot `cnv_score` and their
+  scRNA-derived NMF program scores do not separate lesion from normal spots well (cnv_score AUC
+  0.44–0.54; SSC program 0.48–0.85). Data and code map: [START.md](START.md).
+
+- **2026-10-22: what Chen et al. 2021 (Cell, PMC8941949) already claims — do not present as ours.**
+  Checked against the full text. (1) Adenomas arise from WNT-driven stem-cell expansion
+  ("bottom-up"); serrated polyps from differentiated cells via gastric/pyloric-type metaplasia
+  ("top-down"). Evidence they used: p-Creode trajectories (stem branch shared with ASC), MxIF
+  (OLFM4/SOX9 high in ADs; MUC5AC+ cells at the crypt top over normal-looking crypt bases in
+  serrated lesions), DENDRO genetic phylogeny from scRNA variants (ASC genetically closer to
+  crypt-base stem cells than SSC), CDX2 loss and a fetal program in SSC. (2) WES on FFPE (APC in
+  85 % of TAs). (3) Cytotoxic immune microenvironment in serrated polyps, independent of
+  hypermutation, tied to differentiation status; mouse Lrig1- vs Mist1-driven Apc and Braf models.
+  (4) MSI-H CRCs hold non-metaplastic stem-like regions depleted of cytotoxic cells. (5) Signatures
+  validated by bulk RNA-seq (58 ADs, 8 SSLs). They collected matching normal biopsies but did not
+  build the analysis on within-person pairing. Our ASC→stem / SSC→mature results are therefore
+  **within-person confirmations**, not discoveries. Heiser et al. 2023 (Cell,
+  10.1016/j.cell.2023.11.006) already did spatial "phylogeographic" progression trajectories
+  (CIN+ / hypermutated) on 31 specimens; Becker et al. 2022 (Nat Genet) already did a scATAC +
+  snRNA stem-like continuum from normal to polyp to CRC (Stanford, FAP and non-FAP).
+- **ATAC is not in HTA11.** The only chromatin data in reach is Stanford GSE201348 (Becker 2022),
+  different people from HTA11. HTA11 MxIF exists only as Level-2 images (240 files / 46 specimens /
+  45 people, 32 shared with scRNA; CRDC-GC/SB-CGC free account); the OSF quantification tables
+  are 0 bytes.
+
+- **2026-10-20: only one donor in the held data carries both routes, HTA11_6801 (VAL,
+  sigmoid):** a TA and an SSL, each with its own adjacent normal. Its TA scores as high on
+  the DIS serrated-up signature as its SSL. Subtracting a donor's normal removes a strong
+  donor fingerprint (polyp closest to own normal in 21/36) but does **not** improve coarse
+  route classification (X2); see `report/10_23_report.md`, 10-20 section.
+
 - **2026-10-19: OSF `MxIF/quantification/` is empty.** All 16 `*_threshold_quantification.csv`
   files are 0 bytes (md5 `d41d8cd98f00b204e9800998ecf8427e`). The "pre-segmented MxIF
   shortcut" noted below does not exist; MxIF would need segmentation from Level-2
@@ -9,7 +61,7 @@
   `pathology_annotation` per spot (adenoma / adenoma_border / normal_mucosa /
   smooth_muscle / lymphoid_follicle), CNV clone, and the published NMF scores. Only
   4 polyp captures have normal-mucosa spots (8270_1, 8270_2 TA; 8270_3, 8270_5 SSL/HP),
-  and only HTA11_10711 overlaps our scRNA donors.
+  and only HTA11_10711 overlaps our scRNA donors. **Wrong — all six overlap; see the 2026-10-22 correction above.**
   [Inventory](record/006_feasibility/osf_hftq2_inventory.tsv).
 - **The CELLxGENE epithelial H5ADs carry raw integer counts in `raw/X`**; `X` is a
   dense, gzip-chunked normalized float matrix (~9 GB in memory) — read `raw/X` with
@@ -171,3 +223,9 @@
 - The initial read-only `.git` seen inside the sandbox was a placeholder: an
   approved host-side check found no actual directory. Approved `git init` created
   normal metadata without replacing an existing repository.
+
+- **QC provenance (2026-10-22).** The CELLxGENE Vanderbilt objects are post-QC: the authors
+  kept high-quality barcodes with dropkick (collection description, Chen et al. 2021). We add
+  no cell filter. Cell counts: 122,811 epithelial cells over 55 people in DIS + VAL; the 33
+  normal-plus-polyp paired people hold 93,071 of them — do not quote 122,811 as the paired
+  cohort.

@@ -29,9 +29,16 @@ manually written submission. Assignment writing constraints are recorded in
   per-file access checks; see `record/003_stanford_access/README.md` for inputs.
 - `bash scripts/ensure_week.sh`: select/create this week's report pair before writing.
 - Analysis pipeline (Slurm, `cscc-cpu-p` / `cscc-cpu-qos`): `sbatch scripts/build_pseudobulk.sh`,
-  `sbatch scripts/paired_analysis.sh`, `sbatch scripts/visium_scoring.sh`; figures with
+  `sbatch scripts/paired_analysis.sh`, `sbatch scripts/visium_scoring.sh`; marker-gene spot calls `sbatch scripts/visium_marker_calls.sh`; figures with
   `/l/users/$USER/venvs/hta11/bin/python scripts/make_figures.py /l/users/$USER/HTA11/derived figures`.
   Order and outputs: [record 006](record/006_feasibility/README.md).
+  Hypothesis checks: `sbatch scripts/hypothesis_checks.sh` (X1–X5), `sbatch scripts/pairing_benefit.sh`
+  (X6) → `derived/hypothesis/`; step-4 matching `sbatch scripts/cell_matching.sh [--test]` →
+  `derived/cell_matching/`; label-free UMAP/PCA `sbatch scripts/label_free_view.sh` → `derived/label_free/`, `figures/fig10_*`; stem/mature scores `sbatch scripts/crypt_axis_scores.sh` (same dir); label check `scripts/marker_check.py PB_DIR OUT_DIR` (seconds); talk figures (fig8, fig11–14, fig17): `scripts/make_story_figures.py DERIVED figures`; person explorer page: `scripts/make_person_explorer.py DERIVED presentation/person_explorer/template.html OUT.html` → https://claude.ai/artifact/Xi6uWPxrpUKZcgz9LL3YDH;
+  four next-step models (GPU, each takes `--test`): `sbatch scripts/person_free.sh` (fig18), `scripts/polyp_anomaly.sh` (fig19),
+  `scripts/polyp_flow.sh` (fig20), `scripts/visium_mapping.sh` (fig21) → `derived/{person_free,anomaly,flow,visium_mapping}/`;
+  H&E polyp panels (slide 2): `scripts/make_he_panels.py /l/users/$USER/HTA11/data/osf_hftq2/ST_master figures` (seconds); add `/l/users/$USER/HTA11/derived/visium/marker_calls_spots.tsv.gz` as a third argument for fig16 (route genes on the same slices).
+- Slides follow the global `slide-storytelling` skill (story order, plain words, gray term lines).
 - Project analysis env: `/l/users/$USER/venvs/hta11` (scanpy + PyDESeq2 + gseapy). No R, no node.
 - Arms console artifact: `console/index.html` → https://claude.ai/artifact/EAd4sS1nSVmPepYoRBhZpF.
   Update the data arrays at the top and republish after every project change.

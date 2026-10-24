@@ -52,7 +52,27 @@ Core pipeline steps of weeks 2–6 and the Visium endpoint have a first working 
    contrasts (ASC vs normal STM/TAC, SSC likewise).
 3. Sensitivity: HP vs SSL, site, leave-one-donor-out; score published NMF k=30 programs.
 4. Visium on all 7 sections with section as the unit.
-5. Optional after the core: OT correspondence (`moscot`).
+5. ~~Optional after the core: OT correspondence (`moscot`).~~ **Revised 2026-10-20:** the
+   same-person cell-matching tool (OT between one donor's polyp and normal cells) is now the
+   proposed method contribution, answering the instructors' "novel approaches" remark with
+   a yes for this one step. Pseudobulk preview X4 already shows ASC → own STM (10/13) and
+   SSC → own ABS (10/10). The standard core (items 1–4) must still stand without it.
+   Couplings remain resemblance, not lineage. First run 2026-10-20 (`scripts/cell_matching.py`):
+   ASC → own STM 11/14, SSC → own ABS 9/10. Next: shuffled-label null, leave-one-donor-out,
+   moscot comparison if it can be installed.
+
+## Four next-step models (implemented 2026-10-23)
+
+First full runs of the deck's closing four (results: `report/10_23_report.md`, 10-23 sections):
+1. person-free scVI — works partially (healthy same-person share halved, ASC/SSC stay apart);
+2. held-out anomaly score — moderate (median AUROC 0.66–0.78), SSC most anomalous, ASC not;
+3. healthy→polyp flow — beats "unchanged" and picks the right route, but loses to other people's
+   polyps and does not reproduce new-cell shares;
+4. DestVI on Visium — see report.
+
+Candidate follow-ups (not started, owner to choose): flow and anomaly score inside the
+person-free scVI latent (step 1 → 3, 1 → 2); condition the flow on the person's healthy
+composition; exclude polyps with < 5 % new cells from flow training as a sensitivity check.
 
 ## Milestones
 
