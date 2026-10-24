@@ -1,0 +1,17 @@
+<section id="look" data-transition="fade" style="background:#ffffff;color:#1d1a29;font-family:'Public Sans', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<h2 style="font-family:'Newsreader', Georgia, serif;font-size:60px;font-weight:500;line-height:1.1">Without any labels, polyp cells already stand apart</h2>
+<p style="font-size:30px;line-height:1.35">Each dot is one cell; similar cells sit close. The map uses genes only. Colours come from the sample record (polyp or healthy biopsy) and are added afterwards.</p>
+</div>
+<div style="display:flex;gap:48px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<img src="/_blob/20a35bc2affd513822ff18445898cf7c" alt="Map of one person's cells: healthy lining in gray, the conventional polyp in blue and the serrated polyp in orange, each mostly in its own region." style="width:784px;height:500px;object-fit:contain">
+<p style="font-size:30px;line-height:1.35"><b>One person:</b> each polyp has its own corner.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<img src="/_blob/a2045457a728ee31fef4477cd7a40e53" alt="Map of about 63,000 cells from 29 people. Polyp cells that have no healthy cell nearby are highlighted in dark red; they form several large regions." style="width:784px;height:500px;object-fit:contain">
+<p style="font-size:30px;line-height:1.35"><b>Everyone:</b> half of polyp cells have no healthy cell nearby.</p>
+</div>
+</div>
+<aside>First, the most direct look at the data. We built a map from the genes alone: each dot is one cell, and cells with similar genes sit close together. The map never sees where a cell came from. Only afterwards do we colour each cell by its sample: did it come from the polyp biopsy or from the healthy-lining biopsy? That is the hospital’s sample record, not a gene test. On the left is the one person with both kinds of polyp: healthy lining in gray, the conventional polyp in blue, the serrated polyp in orange. Each polyp has its own corner. On the right is everyone, about 63 thousand cells from 29 people. A polyp cell is dark red when almost none of its 30 closest cells come from a healthy sample. That is about half of all polyp cells, but almost no healthy cell. So the polyps contain something new, visible before any cell-type labels or marker genes. (Depth-normalised, log, 2,000 variable genes, 30 PCs, UMAP, no batch correction. Dark red = at most 5 percent healthy cells among the 30 nearest; 43 to 57 percent of polyp cells, about 30 of 64 thousand healthy cells. Left: HTA11_6801, map built from its 3,967 cells only. Part of this is person-specific; next slide.)</aside>
+</section>

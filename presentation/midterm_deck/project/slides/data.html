@@ -1,24 +1,43 @@
-<section id="data" data-transition="fade" style="background:#f7f6f9;color:#1d1a29;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
-<div style="display:flex;flex-direction:column;gap:16px">
-<p style="font-size:26px;letter-spacing:3px;text-transform:uppercase;color:#a8365c;font-weight:600">Data, inspected</p>
-<h2 style="font-family:'Newsreader', Georgia, serif;font-size:64px;font-weight:500;line-height:1.1">Open HTA11 data, opened and checked cell by cell</h2>
-</div>
-<table style="font-size:28px;color:#1d1a29;font-variant-numeric:tabular-nums">
-<tr><th style="width:40%">Object (all open access)</th><th style="width:20%">Specimens / donors</th><th style="width:20%">Paired donors, conventional</th><th style="width:20%">Paired donors, serrated</th></tr>
-<tr><td>scRNA epithelium, discovery (DIS)</td><td>62 / 30</td><td>11</td><td>9</td></tr>
-<tr><td>scRNA epithelium, validation (VAL)</td><td>59 / 26</td><td>8</td><td>6</td></tr>
-<tr><td>Visium polyp sections (OSF)</td><td>7 sections</td><td>2 with normal mucosa</td><td>2 with normal mucosa</td></tr>
-</table>
-<div style="display:flex;gap:40px">
-<div style="flex:1;display:flex;flex-direction:column;gap:12px">
-<h3 style="font-size:32px;font-weight:600;color:#1f7a4a">Confirmed in the files</h3>
-<p style="font-size:26px;line-height:1.45;color:#4f4a60">Raw integer counts for 122,811 cells · donor, specimen and pathology on every cell · published cell-state labels incl. lesion states ASC and SSC · DIS and VAL share 1 donor, so they are independent cohorts</p>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;gap:12px">
-<h3 style="font-size:32px;font-weight:600;color:#b3261e">Not as we imagined</h3>
-<p style="font-size:26px;line-height:1.45;color:#4f4a60">All 16 OSF MxIF cell tables are empty files, so spatial moves to Visium · 3 further Synapse objects still blocked · no cancer subtype on epithelium</p>
-</div>
-</div>
-<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#7b7690">Sources: CELLxGENE Vanderbilt H5ADs (Chen et al. 2021, Cell); OSF hftq2 (Heiser et al. 2023, Cell). Paired = donor has normal mucosa and that polyp type.</p>
-<aside>We hold two donor-disjoint epithelial single-cell objects, about 123 thousand cells. Every cell carries its donor, specimen and pathology, and the raw counts are there, so the paired design is real. That gives 19 conventional and 15 serrated donors with their own normal tissue: we discover in DIS and validate in VAL. Two things were not as planned. The pre-segmented MxIF tables on OSF turned out to be empty files, so our spatial arm moved to Visium polyp sections that come with a pathologist’s spot annotation. And three larger objects on Synapse are still blocked.</aside>
+<section id="data" data-transition="fade" style="display:flex; flex-direction:column; gap:32px; padding:96px 128px 160px; background:#f7f6f9">
+  <div style="display:flex; flex-direction:column; gap:12px">
+    <p style="font-family:'Public Sans', Arial, sans-serif; font-size:24px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:#a8365c">data scope</p>
+    <h2 style="font-family:Newsreader, Georgia, serif; font-size:60px; font-weight:500; line-height:1.1; color:#1d1a29">Two different routes of the polyps</h2>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:10px">
+    <table style="width:1664px; font-family:'Public Sans', Arial, sans-serif; font-size:26px; line-height:1.3; color:#1d1a29; background:#ffffff">
+      <tr style="background:#ece9f3"><th style="width:21%; color:#4f4a60">Data</th><th style="width:42%; color:#4f4a60">What we have</th><th style="width:37%; color:#4f4a60">What we use it for</th></tr>
+      <tr><td>Single-cell RNA<br>genes switched on in each cell</td><td><b>About 123,000 lining cells</b> from 55 people.<br>We pair 33 of them, each with a polyp and their own healthy lining (19 conventional, 15 serrated): about 93,000 cells</td><td>Main analysis; two separate groups of people (20 and 13), so one checks the other</td></tr>
+      <tr><td>Spatial RNA: <b>10x Visium</b><br>genes read at mapped spots on a tissue slice</td><td>7 polyp slices with tissue photos (3 conventional, 4 serrated); about 6,900 spots, each a few cells wide</td><td>Check that route genes mark the polyp in place</td></tr>
+    </table>
+    <p style="font-family:'Public Sans', Arial, sans-serif; font-size:24px; color:#6e6980">Both from the open HTAN Vanderbilt colon atlas (Chen et al., Cell 2021)</p>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:12px">
+    <p style="font-family:'Public Sans', Arial, sans-serif; font-size:26px; font-weight:600; color:#4f4a60">The surprise: one patient, same stretch of colon (sigmoid)</p>
+    <div style="display:flex; flex-direction:row; gap:20px">
+      <div style="display:flex; flex-direction:row; gap:16px; align-items:center; justify-content:space-between; flex:1; padding:20px 24px; background:#ffffff; border-top:8px solid #c35a79; border-radius:10px">
+        <div style="display:flex; flex-direction:column; gap:4px">
+          <h3 style="font-family:'Public Sans', Arial, sans-serif; font-size:28px; font-weight:700; color:#1d1a29">Healthy lining</h3>
+          <p style="font-family:'Public Sans', Arial, sans-serif; font-size:24px; color:#4f4a60">polyp-only cells</p>
+        </div>
+        <p style="font-family:'Public Sans', Arial, sans-serif; font-size:56px; font-weight:700; color:#4f4a60">0%</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:16px; align-items:center; justify-content:space-between; flex:1; padding:20px 24px; background:#ffffff; border-top:8px solid #2a78d6; border-radius:10px">
+        <div style="display:flex; flex-direction:column; gap:4px">
+          <h3 style="font-family:'Public Sans', Arial, sans-serif; font-size:28px; font-weight:700; color:#205e9f">Conventional polyp</h3>
+          <p style="font-family:'Public Sans', Arial, sans-serif; font-size:24px; color:#4f4a60">adenoma-type cells</p>
+        </div>
+        <p style="font-family:'Public Sans', Arial, sans-serif; font-size:56px; font-weight:700; color:#205e9f">6%</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:16px; align-items:center; justify-content:space-between; flex:1; padding:20px 24px; background:#ffffff; border-top:8px solid #eb6834; border-radius:10px">
+        <div style="display:flex; flex-direction:column; gap:4px">
+          <h3 style="font-family:'Public Sans', Arial, sans-serif; font-size:28px; font-weight:700; color:#a8481d">Serrated polyp</h3>
+          <p style="font-family:'Public Sans', Arial, sans-serif; font-size:24px; color:#4f4a60">serrated-type cells</p>
+        </div>
+        <p style="font-family:'Public Sans', Arial, sans-serif; font-size:56px; font-weight:700; color:#a8481d">27%</p>
+      </div>
+    </div>
+    <p style="font-family:'Public Sans', Arial, sans-serif; font-size:24px; color:#85818b">Adenoma-type and serrated-type cells: new cell types the atlas found only in polyps, one for each route.</p>
+  </div>
+  <p style="position:absolute; bottom:64px; left:128px; width:1664px; font-family:'Public Sans', Arial, sans-serif; font-size:24px; color:#85818b">Quality: the atlas authors removed low-quality cells; we use a sample only if it has at least 30 cells.</p>
+  <aside>Our data come from an open colon atlas, with two kinds of data. The main one is single-cell RNA, which reads which genes are switched on in each individual cell. Thirty-three people gave a polyp and a sample of their own healthy lining: 19 conventional and 15 serrated polyps, about 93 thousand lining cells. They come in two separate groups of people, 20 and 13, so we can find a result in one group and check it in the other. In total the atlas holds about 123 thousand lining cells from 55 people; we use the 93 thousand from people who gave both a polyp and healthy lining. The second kind is tissue slices, measured with 10x Visium: gene readings at mapped spots, with a photo of the tissue, for 7 polyps, about 6,900 spots in all. We use those to check that our route genes light up where the polyp is. Here is what made the question real for us. One person had two polyps in the same stretch of colon. A pathologist called one conventional and one serrated. The cells agree: the healthy lining has essentially none of the polyp-only cell types; the conventional polyp grew adenoma-type cells, 6 percent, and the serrated polyp grew serrated-type cells, 27 percent. Same inherited genes, same diet, same part of the colon, yet two routes. So the person’s background alone does not decide the route, and the clean way to see what a polyp changed is to compare it with the same person’s healthy tissue. (Donor HTA11_6801, VAL: conventional 65 of 1,014 cells ASC; serrated 342 of 1,264 SSC; two normal samples 1 SSC in 1,689 cells. Polyp 1 also carries 2% SSC, polyp 2 1% ASC. All 55 people and 122,811 epithelial cells including unpaired and cancer samples; paired people 53,292 + 39,779 cells. Visium: fresh-frozen, Spatial 3' v1, 55 micrometre spots, 6,915 tissue spots over 7 captures from 6 people, all 6 also in the single-cell data. Single-cell: TruDrop, inDrop-style droplets; 10,696 further non-epithelial cells exist but are not used. QC: authors' dropkick barcode filter; we add no cell filter; pseudobulk needs at least 30 cells; genes need 10 or more counts in 3 or more samples; median mitochondrial fraction is high in the first group, 37 to 44 percent per sample, still under review.)</aside>
 </section>

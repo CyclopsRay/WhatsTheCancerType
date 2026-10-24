@@ -1,0 +1,34 @@
+<section id="plan" data-transition="fade" style="background:#ffffff;color:#1d1a29;font-family:'Public Sans', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-family:'Newsreader', Georgia, serif;font-size:60px;font-weight:500;line-height:1.1">Next: four models built on what we found</h2>
+<div style="display:flex;flex-direction:column;gap:34px">
+<div style="display:flex;gap:32px;align-items:baseline">
+<p style="width:60px;font-size:44px;font-weight:700;color:#a8365c">1</p>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px">
+<p style="font-size:34px;line-height:1.35"><b>Line up people:</b> train a model that ignores whose cell it is, since polyp cells now clump by person.</p>
+<p style="font-size:26px;line-height:1.35;color:#6e6980">VAE: a network that squeezes each cell into a few numbers. Works if healthy cells mix and the two routes stay apart.</p>
+</div>
+</div>
+<div style="display:flex;gap:32px;align-items:baseline">
+<p style="width:60px;font-size:44px;font-weight:700;color:#a8365c">2</p>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px">
+<p style="font-size:34px;line-height:1.35"><b>Polyp as the odd one out:</b> learn what healthy looks like, then score how far each polyp cell sits from it.</p>
+<p style="font-size:26px;line-height:1.35;color:#6e6980">Anomaly detection. Easy to measure: does the score tell a new person’s polyp from their own lining?</p>
+</div>
+</div>
+<div style="display:flex;gap:32px;align-items:baseline">
+<p style="width:60px;font-size:44px;font-weight:700;color:#a8365c">3</p>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px">
+<p style="font-size:34px;line-height:1.35"><b>From healthy to polyp:</b> learn how healthy cells shift into each route, new cell types included.</p>
+<p style="font-size:26px;line-height:1.35;color:#6e6980">A flow (ODE) between the two cell clouds. Test: from one person’s healthy cells, predict their polyp.</p>
+</div>
+</div>
+<div style="display:flex;gap:32px;align-items:baseline">
+<p style="width:60px;font-size:44px;font-weight:700;color:#a8365c">4</p>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px">
+<p style="font-size:34px;line-height:1.35"><b>Polyp in the tissue:</b> place single cells onto the tissue slices and map how far the polyp spreads.</p>
+<p style="font-size:26px;line-height:1.35;color:#6e6980">All 6 people with tissue slices also have single cells.</p>
+</div>
+</div>
+</div>
+<aside>To finish, four next steps, each built on what we already found. One, line up people. Right now polyp cells clump by person, even though healthy cells from different people mix fairly well. We want a model, for example a VAE, that learns to ignore whose cell it is. We call it a success only if healthy cells from different people mix and the conventional and serrated new cells still stay apart, because part of the person clumping may be real: each polyp grows from its own cells. Two, treat the polyp as the odd one out: learn what healthy lining looks like and score how far each polyp cell sits from it. This is easy to measure: train without one person, then check whether the score tells that person's polyp from their own lining, and whether the highest scores land on the new cell types. Our "no look-alike" cells are already a simple version of this score. Three, from healthy to polyp: learn a flow, like an ODE, that moves the healthy cells into each route's polyp, including the new cell types, which do not exist in healthy lining. Then, given someone's healthy cells, the model says what each route would look like. We test it by predicting a left-out person's polyp, and the one person who has both kinds of polyp is a direct check. One honest limit: our samples are snapshots, so the flow is a best guess at the change, not one polyp watched over time. Four, polyp in the tissue: use each person's single cells to fill in the blurry tissue dots and map how far the polyp spreads, including whether the healthy lining next to a polyp already carries part of its change. All six people behind our tissue slices also have single cells. Thank you. (Methods: 1–2 e.g. scVI with person as the batch key, scored by kNN mixing of normal cells and route separation; anomaly score from reconstruction error or latent density, AUROC with leave-one-person-out. 3 e.g. flow matching or unbalanced OT with a growth term, extending our step-4 matching; HTA11_6801 has both routes. 4 e.g. Tangram, cell2location or RCTD with a same-person reference; HTA11_10711 has no healthy single cells.)</aside>
+</section>

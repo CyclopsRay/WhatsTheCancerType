@@ -2,14 +2,15 @@
   "v": 4,
   "createdOnFiles": {"v": 1, "at": "2026-10-19T09:05:00Z"},
   "lists": "css",
-  "title": "HTA11 Midterm: Polyp vs Matched Normal",
-  "order": ["cover", "question", "data", "methods", "states", "routes", "replication", "next"],
+  "title": "HTA11 Midterm: How a Polyp Takes Its Route",
+  "order": ["cover", "polyp", "data", "models", "idea", "tests", "look", "person", "newcells", "resemble", "tissue", "meaning", "plan"],
   "sections": {
-    "s1": {"description": "Why colorectal polyps, and the question we ask of them", "start": "cover"},
-    "s2": {"description": "The data we hold and how we inspected it", "start": "data"},
-    "s3": {"description": "The analysis, built from standard tools", "start": "methods"},
-    "s4": {"description": "Preliminary results showing the analysis runs on the real data", "start": "states"},
-    "s5": {"description": "What comes next and what the design cannot claim", "start": "next"}
+    "s1": {"description": "What a polyp is, its two routes, and why it matters", "start": "cover"},
+    "s2": {"description": "The data, and one person whose two polyps took two routes", "start": "data"},
+    "s3": {"description": "What current models tell us and why they are not enough", "start": "models"},
+    "s4": {"description": "What we propose and where we believe the signal is", "start": "idea"},
+    "s5": {"description": "Preliminary evidence for the claim", "start": "look"},
+    "s6": {"description": "What it means if it works, and what comes next", "start": "meaning"}
   },
   "faces": {
     "newsreader": {"family": "Newsreader", "href": "https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap"},

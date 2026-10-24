@@ -1,0 +1,129 @@
+<title>Polyp Fingerprint Explorer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&family=Public+Sans:wght@400;600;700&display=swap">
+<style>
+/* Layout: one map of every cell, a person picker above it, that person's numbers beside it. */
+:root {
+  --bg: #ffffff; --fg: #1d1a29; --muted: #5f5a70; --line: #e2dfea; --others: #e6e3ec;
+  --healthy: #5f5a70; --conv: #2a78d6; --serr: #e0612c; --accent: #a8365c;
+  --f-display: "Newsreader", Georgia, serif; --f-body: "Public Sans", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #16141d; --fg: #eeecf4; --muted: #b3aec4; --line: #2f2b3d; --others: #2c2938;
+  --healthy: #c9c4d8; --conv: #6aa6ef; --serr: #f08a5c; --accent: #ec86a6; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #16141d; --fg: #eeecf4; --muted: #b3aec4; --line: #2f2b3d; --others: #2c2938;
+  --healthy: #c9c4d8; --conv: #6aa6ef; --serr: #f08a5c; --accent: #ec86a6; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 16px/1.5 var(--f-body); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 28px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 20px; }
+h1 { font: 500 34px/1.15 var(--f-display); margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.lead { color: var(--muted); max-width: 70ch; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+label { font-weight: 600; }
+select, button { font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 6px; padding: 7px 10px; }
+button { cursor: pointer; }
+select:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.main { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 28px; align-items: start; }
+@media (max-width: 760px) { .main { grid-template-columns: minmax(0, 1fr); } }
+.plot { position: relative; width: 100%; max-width: 100%; aspect-ratio: 1 / 1; }
+canvas { width: 100%; height: 100%; display: block; }
+.side { display: grid; gap: 16px; min-width: 0; }
+.who { font: 500 26px/1.2 var(--f-display); }
+.key { display: grid; gap: 6px; }
+.key span { display: inline-flex; align-items: center; gap: 8px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.fact { display: grid; gap: 2px; padding-top: 12px; border-top: 1px solid var(--line); }
+.big { font-size: 30px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.note { color: var(--muted); font-size: 14px; }
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:8px">
+    <h1>Pick a person: where do their polyp cells sit?</h1>
+    <p class="lead">Each dot is one cell. Cells with similar genes sit close together. The map is built from the RNA alone, with no labels. Pick a person to light up their healthy lining and their polyp.</p>
+  </header>
+  <div class="controls">
+    <label for="cohort">Group</label>
+    <select id="cohort"></select>
+    <label for="person">Person</label>
+    <select id="person"></select>
+    <button id="prev" type="button" aria-label="Previous person">←</button>
+    <button id="next" type="button" aria-label="Next person">→</button>
+  </div>
+  <div class="main">
+    <div class="plot"><canvas id="map" role="img" aria-label="Map of all cells with the chosen person highlighted"></canvas></div>
+    <aside class="side">
+      <p class="who" id="who"></p>
+      <div class="key" id="key"></div>
+      <div class="fact">
+        <p>Of each cell’s 30 closest cells, how many come from the same person?</p>
+        <p><span class="big" id="nh"></span> healthy cells</p>
+        <p><span class="big" id="np"></span> polyp cells</p>
+        <p class="note">Everyone at random: about 1 in 16.</p>
+      </div>
+      <div class="fact" id="rankbox">
+        <p>Out of all people’s healthy lining, which does this polyp look most like?</p>
+        <p class="big" id="rank"></p>
+      </div>
+    </aside>
+  </div>
+  <p class="note">Data: HTAN Vanderbilt colon atlas (Chen et al., Cell 2021), epithelial cells. Map: our own, from raw counts, no batch correction.</p>
+</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const $ = (id) => document.getElementById(id);
+const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const unpack = (b64, T) => { const s = atob(b64), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return new T(u.buffer); };
+const cohorts = DATA.map(c => ({ ...c, X: unpack(c.x, Uint16Array), Y: unpack(c.y, Uint16Array), P: unpack(c.person, Uint8Array), T: unpack(c.tissue, Uint8Array) }));
+const ROUTE = { conventional: "conventional polyp", serrated: "serrated polyp" };
+let ci = 0, pi = 0;
+
+function fillPeople() {
+  const c = cohorts[ci];
+  $("person").innerHTML = c.people.map((p, i) => `<option value="${i}">${p.id.replace("HTA11_", "Person ")} · ${p.routes.join(" + ") || "healthy only"}</option>`).join("");
+  $("person").value = pi;
+}
+function frac(v) { if (v == null) return "—"; const k = Math.round(v * 10); return `${k} in 10`; }
+
+function draw() {
+  const c = cohorts[ci], p = c.people[pi], cv = $("map");
+  const r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+  const g = cv.getContext("2d"), W = cv.width, pad = 8 * dpr, s = (W - 2 * pad) / 4095;
+  g.clearRect(0, 0, W, W);
+  const col = [css("--healthy"), css("--conv"), css("--serr")];
+  g.fillStyle = css("--others");
+  const d0 = 1.4 * dpr;
+  for (let i = 0; i < c.n; i++) if (c.P[i] !== pi) g.fillRect(pad + c.X[i] * s, pad + c.Y[i] * s, d0, d0);
+  const d1 = 2.6 * dpr;
+  for (const t of [0, 1, 2]) {
+    g.fillStyle = col[t];
+    for (let i = 0; i < c.n; i++) if (c.P[i] === pi && c.T[i] === t) g.fillRect(pad + c.X[i] * s - d1 / 2, pad + c.Y[i] * s - d1 / 2, d1, d1);
+  }
+  $("who").textContent = p.id.replace("HTA11_", "Person ");
+  const items = [[css("--healthy"), `their healthy lining (${p.healthy.toLocaleString()} cells)`]]
+    .concat(p.routes.map(rt => [rt === "conventional" ? css("--conv") : css("--serr"), `their ${ROUTE[rt]}`]))
+    .concat([[css("--others"), "everyone else"]]);
+  $("key").innerHTML = items.map(([c2, t]) => `<span><i class="dot" style="background:${c2}"></i>${t}</span>`).join("");
+  $("nh").textContent = frac(p.nbrHealthy); $("np").textContent = frac(p.nbrPolyp);
+  $("rankbox").hidden = !p.ranks.length;
+  $("rank").textContent = p.ranks.map(k => k.rank === 1 ? `its own (1st of ${k.of})` : `own lining ranks ${k.rank} of ${k.of}`).join(" · ");
+}
+
+function setCohort(i) { ci = i; pi = 0; fillPeople(); draw(); }
+$("cohort").innerHTML = cohorts.map((c, i) => `<option value="${i}">${c.name}</option>`).join("");
+$("cohort").addEventListener("change", e => setCohort(+e.target.value));
+$("person").addEventListener("change", e => { pi = +e.target.value; draw(); });
+$("prev").addEventListener("click", () => { const n = cohorts[ci].people.length; pi = (pi - 1 + n) % n; $("person").value = pi; draw(); });
+$("next").addEventListener("click", () => { const n = cohorts[ci].people.length; pi = (pi + 1) % n; $("person").value = pi; draw(); });
+window.addEventListener("resize", draw);
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
+const start = cohorts[0].people.findIndex(p => p.routes.length && p.healthy > 1000);
+pi = start < 0 ? 0 : start; fillPeople(); draw();
+</script>
