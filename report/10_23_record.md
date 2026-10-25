@@ -75,7 +75,7 @@ A8 presentation; A9 progress report.
   SSL-HP 389 cells). This partly reopens the carcinoma-subtype question, but its
   `X` is not raw counts and the CRC arm is out of scope.
 - **Tooling.** No R on the host, so DESeq2 runs through PyDESeq2 0.5.2 in a new
-  project venv `/l/users/yuqi.lei/venvs/hta11` (layers on the promotervi scanpy env).
+  project venv `/nfs-stor/yuqi.lei/venvs/hta11` (layers on the promotervi scanpy env).
 
 ### 2026-10-19 (later) — What the first run says, and how the talk frames it
 
@@ -423,7 +423,7 @@ Owner request on the midterm deck (artifact version 38).
 ## 2026-10-23 — The four next-step models: implementation design
 
 Owner: "the four plans in Next can start being implemented." AI-implemented; all four run on
-`cscc-gpu-p` (scvi-tools 1.3.3 + torch/CUDA 11.8 already in `/l/users/$USER/venvs/hta11`).
+`cscc-gpu-p` (scvi-tools 1.3.3 + torch/CUDA 11.8 already in `/nfs-stor/$USER/venvs/hta11`).
 Shared loaders in `scripts/next_common.py`. Same cells as the label-free map (healthy +
 conventional + serrated, published post-QC cells, no extra filter).
 

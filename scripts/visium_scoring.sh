@@ -7,10 +7,10 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=16G
 #SBATCH --time=00:30:00
-#SBATCH --output=/l/users/yuqi.lei/HTA11/logs/visium_%j.out
-#SBATCH --error=/l/users/yuqi.lei/HTA11/logs/visium_%j.err
+#SBATCH --output=/nfs-stor/yuqi.lei/HTA11/logs/visium_%j.out
+#SBATCH --error=/nfs-stor/yuqi.lei/HTA11/logs/visium_%j.err
 set -euo pipefail
-/l/users/yuqi.lei/venvs/hta11/bin/python /home/yuqi.lei/HTA11/scripts/visium_scoring.py \
-  /l/users/yuqi.lei/HTA11/data/osf_hftq2/ST_master \
-  /l/users/yuqi.lei/HTA11/derived/paired \
-  /l/users/yuqi.lei/HTA11/derived/visium
+/nfs-stor/yuqi.lei/venvs/hta11/bin/python /home/yuqi.lei/HTA11/scripts/visium_scoring.py \
+  /nfs-stor/yuqi.lei/HTA11/data/osf_hftq2/ST_master \
+  /nfs-stor/yuqi.lei/HTA11/derived/paired \
+  /nfs-stor/yuqi.lei/HTA11/derived/visium

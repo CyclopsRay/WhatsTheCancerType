@@ -68,7 +68,7 @@ for a Slurm-side H5AD load and metadata audit.
 ## 2026-09-17 — direct Vanderbilt H5AD download complete
 
 Source: public CELLxGENE assets; download job `256252`. Destination:
-`/l/users/yuqi.lei/HTA11/data/vanderbilt_cellxgene/`.
+`/nfs-stor/yuqi.lei/HTA11/data/vanderbilt_cellxgene/`.
 
 | File | Expected / observed bytes | SHA-256 |
 |---|---:|---|

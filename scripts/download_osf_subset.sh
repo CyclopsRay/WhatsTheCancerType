@@ -8,10 +8,10 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=2G
 #SBATCH --time=02:00:00
-#SBATCH --output=/l/users/yuqi.lei/HTA11/logs/osf_dl_%j.out
-#SBATCH --error=/l/users/yuqi.lei/HTA11/logs/osf_dl_%j.err
+#SBATCH --output=/nfs-stor/yuqi.lei/HTA11/logs/osf_dl_%j.out
+#SBATCH --error=/nfs-stor/yuqi.lei/HTA11/logs/osf_dl_%j.err
 set -euo pipefail
-dest=/l/users/yuqi.lei/HTA11/data/osf_hftq2
+dest=/nfs-stor/yuqi.lei/HTA11/data/osf_hftq2
 while IFS=$'\t' read -r path size md5 url; do
   out="$dest$path"; mkdir -p "$(dirname "$out")"
   if [[ -f "$out" ]] && [[ $(md5sum "$out" | cut -d' ' -f1) == "$md5" ]]; then echo "ok (cached) $path"; continue; fi

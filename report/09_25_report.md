@@ -100,7 +100,7 @@ released on Synapse, not through CELLxGENE.
 
 ## 2026-09-18 (later) — First read of H5AD `obs`: the Week-1 cohort gate
 
-Read with `h5py` from `/l/users/yuqi.lei/envs/promotervi`, metadata groups only,
+Read with `h5py` from `/nfs-stor/yuqi.lei/envs/promotervi`, metadata groups only,
 no expression matrix loaded. This replaces portal metadata with matrix contents
 for the three objects we hold.
 

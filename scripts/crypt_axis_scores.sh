@@ -7,10 +7,10 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=24G
 #SBATCH --time=00:30:00
-#SBATCH --output=/l/users/yuqi.lei/HTA11/logs/crypt_%j.out
-#SBATCH --error=/l/users/yuqi.lei/HTA11/logs/crypt_%j.err
+#SBATCH --output=/nfs-stor/yuqi.lei/HTA11/logs/crypt_%j.out
+#SBATCH --error=/nfs-stor/yuqi.lei/HTA11/logs/crypt_%j.err
 
 set -euo pipefail
-D=/l/users/yuqi.lei/HTA11
-/l/users/yuqi.lei/venvs/hta11/bin/python /home/yuqi.lei/HTA11/scripts/crypt_axis_scores.py \
+D=/nfs-stor/yuqi.lei/HTA11
+/nfs-stor/yuqi.lei/venvs/hta11/bin/python /home/yuqi.lei/HTA11/scripts/crypt_axis_scores.py \
   $D/data/vanderbilt_cellxgene $D/derived/pseudobulk $D/derived/label_free

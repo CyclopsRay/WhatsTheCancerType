@@ -9,12 +9,12 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=2G
 #SBATCH --time=04:00:00
-#SBATCH --output=/l/users/yuqi.lei/HTA11/logs/vanderbilt_download_%j.out
-#SBATCH --error=/l/users/yuqi.lei/HTA11/logs/vanderbilt_download_%j.err
+#SBATCH --output=/nfs-stor/yuqi.lei/HTA11/logs/vanderbilt_download_%j.out
+#SBATCH --error=/nfs-stor/yuqi.lei/HTA11/logs/vanderbilt_download_%j.err
 
 set -euo pipefail
 
-dest_dir=/l/users/yuqi.lei/HTA11/data/vanderbilt_cellxgene
+dest_dir=/nfs-stor/yuqi.lei/HTA11/data/vanderbilt_cellxgene
 mkdir -p "$dest_dir"
 
 download() {

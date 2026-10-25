@@ -6,7 +6,7 @@ paragraphs, numbered and bulleted lists, and inline **bold** / `code`.
 Not a general Markdown implementation.
 
 Usage: md_to_pdf.py INPUT.md [OUTPUT.pdf]
-Requires fpdf2 (see /l/users/$USER/venvs/hta11-doc).
+Requires fpdf2 (see /nfs-stor/$USER/venvs/hta11-doc).
 """
 import re
 import sys

@@ -169,7 +169,7 @@ Plans, discussion, decisions, reasoning, and corrections (Chinese or English).
 - At the user's request, created `scripts/download_vanderbilt_cellxgene.sh` and
   submitted Slurm job `256252`. It downloads the three verified public CELLxGENE
   H5AD files (about 2.8 GB) to
-  `/l/users/yuqi.lei/HTA11/data/vanderbilt_cellxgene/`, avoiding a user-mediated
+  `/nfs-stor/yuqi.lei/HTA11/data/vanderbilt_cellxgene/`, avoiding a user-mediated
   local download/upload. The script validates each expected byte size, resumes a
   retained partial file after an interruption, atomically renames complete files,
   and prints SHA-256 checksums.

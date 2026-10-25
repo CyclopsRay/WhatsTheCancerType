@@ -22,7 +22,7 @@ too many and the features should be compressed first.
 
 - (2) was already the 10-23 "scVI" score: mean distance to the 15 nearest training healthy cells in
   the 10-d latent. It is kept as `latent`, now with the KL warm-up fixed (50 epochs).
-- (3) Checked against the DIS DE tables (`/l/users/$USER/HTA11/tmp/hvg_check.py`, srun). The
+- (3) Checked against the DIS DE tables (`/nfs-stor/$USER/HTA11/tmp/hvg_check.py`, srun). The
   2,000 HVGs picked on healthy cells contain only **16 % of conventional-up and 24 % of
   serrated-up genes** (down-genes 30 % / 25 %). 57 % / 41 % of up-genes are seen in < 1 % of
   healthy cells: APCDD1 0.4 %, NKD1 0.7 %, MMP7 0.8 %, CLDN2 0.2 %. These genes are silent in
@@ -98,3 +98,76 @@ Framing choices to check (facts unchanged, see the 10-23 report):
 - The DestVI no-spread result and the X2 negative are left out; spatial is claimed for route and
   purity AUC only.
 - Fig 4 is planned as identity / right-route / wrong-route only, replacing fig20.
+
+## 2026-10-24 — Storage migration /l/users → /nfs-stor (HPC Phase 2, deadline 2026-10-26)
+
+- Copy made 10-07/08 (`~/migration/migrate.sh`, all `VERIFY OK`). On 10-24 it was topped up with
+  26 newer files (anomaly v2 outputs, polyp_recon logs, session history), leaving 0 differences.
+- Cancelled job 338334 (`migsync`, set by an earlier session to run 10-26 12:00). It copied
+  without `--update`, so after the switch it would have overwritten newer /nfs-stor files with the
+  stale /l versions. The owner runs the final sync after the path change instead.
+- Deleted the redundant `*.tar` archives on /nfs-stor (≈337 GB); the unpacked copies had been
+  checked against the source.
+- Owner decision: switch every path. `/l/users/` → `/nfs-stor/` in scripts, configs, docs and
+  reports of HTA11, promoterVI, Therapeutic and spatial_variants, plus `~/.claude/CLAUDE.md`,
+  `~/POLICY.md`, `k2` and the home symlinks. Not rewritten: session logs, file-history,
+  `~/migration/migrate.sh`. Backup of the edited files is in this session's scratchpad.
+- Conda envs and venvs on /nfs-stor have the old prefix baked in. Text files are rewritten; binary
+  files cannot take the longer prefix, so each env gets an import test on a compute node.
+- 10-25, done: (1) the queue was empty and a `-u` dry run showed 0 files missing on /nfs-stor;
+  (2) reachability jobs 341954 (cn-10, cpu) and 341955 (gpu-52, gpu) could list, read, write
+  64 MB and delete under /nfs-stor/yuqi.lei; (3) jobs 341957/341959 relinked 16 symlinks and
+  rewrote 2,321 text files inside /nfs-stor (backups `/nfs-stor/yuqi.lei/.migration_rewrite_backup{,2}.tgz`).
+  All 11 Python envs import from the new prefix. (4) The final `rsync -a -u` copied 0 files.
+  The `faculty` partition used by some Therapeutic scripts does not exist on this cluster, so
+  it was not tested.
+- About 76k binary files in the envs still embed `/l/users`: almost all `.pyc` (only traceback
+  names), plus about 200 conda `.so` and tools with built-in default paths (openssl, terminfo,
+  tcl, Qt). Imports pass, but these fallbacks point at /l once it is gone (see KNOWLEDGE.md).
+- 10-25, backup gaps: /nfs-stor is cluster storage like `$HOME`, so the migration is not a
+  backup. Only GitHub or off-cluster copies survive a cluster loss. HTA11 env exported to `env/`
+  (conda explicit + yml + pip layers, rebuild steps). Therapeutic is now a git repo pushed to
+  github.com/CyclopsRay/Therapeutic (`009f78c`); its private docs, `repro/`, third-party clones
+  and paper PDFs stay out by design.
+
+## 2026-10-25 — Progress-report figures and filled TBDs
+
+- All jobs had finished: anomaly v2 (341132/341133), flow 338315, Visium mapping 338316. No
+  failures in the logs. `sacct` was down, so logs were the check.
+- `scripts/make_report_figures.py` → `figures/report_fig1–5.png`, now in `draft_v1.md`. New
+  panels: the three-step schematic (synthetic points), anomaly v2 new-cell AUROC with the
+  depth-adjusted error (`recon_depth_adjusted.tsv`, detected genes), flow per person, and a Visium
+  grid of 4 sections. fig22 (raw error) is not used.
+- Fig 4 uses `ed_flow + growth`, the column behind the quoted 23/33, 25/33 and 0.17 vs 0.27. Plain
+  `ed_flow` gives 24 and 26; the draft's Methods describes only the flow.
+- Fig 5 shows the other-people reference giving *higher* purity on both serrated sections (AUC
+  0.57 / 0.92 vs own 0.64 / 0.85 on 7663 / 6134). The "own cells find ASC that others miss" claim
+  holds for the two adenomas only (7862, 10711).
+- 10-25, owner request: Figure 1 is now the pipeline schematic. (a) VAE: healthy cells rebuilt as
+  they went in, polyp cells rebuilt as healthy, so the error is large. (b) Unbalanced OT pairs
+  (dot size = mass) plus the flow along a Y-shaped manifold. (c) Detailed spatial panel: crypts and
+  polyp under the spot grid, one spot zoomed into ~10 cells, DestVI with the person's own cells,
+  cell-type shares, purity map. The new-cell panel (fig8) moved to Fig 2a; the gene panels are now
+  2b/2c, and the Results references were updated.
+- **Correction (10-25)** to the Fig 5 note above. The other-people reference gives a higher
+  *SSC level* on both serrated sections (adenoma-spot SSC 0.301 vs 0.233 on 7663; 0.364 vs 0.002 on
+  6134). It gives a higher *AUC* only on 6134 (0.92 vs 0.85). On 7663 the person's own reference
+  is better (0.64 vs 0.57). Overall the own reference has the higher AUC in 3 of 4 sections, as the
+  10-23 report states.
+- 10-25, owner decision: the progress report shows positive results only for now; models can be
+  improved later. Negatives stay in the weekly report (10-23 sections and the anomaly v2 section).
+  Figure layout is now: 1 pipeline; 2 data at a glance (label-free UMAP fig10, person highlight
+  fig17, new cells fig8); 3 genes; 4 healthy-only model; 5 flow + the three Visium sections where
+  the person's own reference beats the other (7862, 10711, 7663; 6134 dropped). The UMAPs had been
+  left out of the 10-24 figure plan for space, not on purpose. Arms console republished (v15).
+- 10-25: abstract opens with prevalence (GLOBOCAN 2022, Bray et al. 2024: 3rd most common, 2nd
+  cancer death, ~1.9 M cases / ~900 k deaths). References renumbered by first appearance (now 16);
+  all 15 DOIs checked against Crossref metadata, all match; Chen/Heiser e-page suffixes added.
+  Figures: explanatory gray text removed at owner's request (captions carry it); panel titles
+  shortened to Detect / Predict / Map. "33 patients" checked: 19 conventional + 15 serrated pairs,
+  HTA11_6801 in both.
+- 10-25: submission PDF `presentation/progress_report/progress_report.pdf` from
+  `scripts/report_to_pdf.py` (fpdf2, STIX serif 11 pt, A4). 6 pages: text pp. 1–3, figures
+  pp. 3–5, references p. 6 (references do not count toward the limit, owner). Fig 1 now has a and b
+  side by side (3.5 in tall); Fig 5a shortened; Fig 5 is shrunk to fit page 5. Body ≈1,468 words.
+  The internal provenance line under the figures was removed from the draft.

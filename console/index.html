@@ -115,10 +115,10 @@ a { color: var(--hema); }
 
 <script>
 // ---- Data: edit these arrays on every project change ----
-const UPDATED = "2026-10-23 14:49 Dubai";
+const UPDATED = "2026-10-25 Dubai";
 const DEADLINES = [
   { what: "Midterm talk, 3–5 min", when: "Thu 2026-10-22", date: "2026-10-22" },
-  { what: "Progress report, ≤1500 words, ≤5 figs", when: "Sat 2026-10-24", date: "2026-10-24" },
+  { what: "Progress report, 3–5 pages, ≤1500 words, ≤5 figs", when: "Sat 2026-10-24 (draft still open)", date: "2026-10-24" },
   { what: "Meet an instructor on feasibility", when: "before the talk if possible", date: null },
 ];
 const VERDICT = "Enough for the midterm. The deck is rebuilt as a story (problem → data surprise → current models and gap → proposal → evidence → meaning), and four quick checks added two new evidence slides. The gaps below are the expected questions, not blockers.";
@@ -156,8 +156,8 @@ const ARMS = [
   { id: "A11", name: "Hypothesis checks", sub: "job 327343", st: "done",
     d: "X1 polyp closest to own donor's normal in <span class=num>21/36</span> (chance ~1.7). X2 subtracting own normal does <b>not</b> improve leave-one-donor-out route calls (17→15/20 DIS, 11→11/14 VAL). X3 DIS signatures call VAL routes 20/23 raw. X4 ASC closest to own STM <span class=num>10/13</span>, SSC to own ABS <span class=num>10/10</span>. X5 route bias kept within state 87–100%. X6 pairing: more hits in 3/4 fits, ~16% smaller SE, same replication." },
   { id: "A10", name: "Open checks", sub: "before the report", st: "next", d: "Marker check of Cell_Type labels · DIS mito fraction (median 37–44%) · why 2/9 DIS serrated donors have ~0 SSC · pooled DIS+VAL fit (19 / 15 donors)." },
-  { id: "A9", name: "Progress report", sub: "due Sat 10-24", st: "next", d: "Each student writes their own text; figures and numbers from this console." },
-  { id: "A12", name: "Same-person cell matching", sub: "unbalanced OT, job 327374", st: "running",
+  { id: "A9", name: "Progress report", sub: "draft_v1, due Sat 10-24", st: "running", d: "Owner's three-step story (detect, predict, map), positive results only. Five figures built by <code>scripts/make_report_figures.py</code>: pipeline schematic, data at a glance (label-free UMAP, person highlight, new cells), genes, healthy-only model, flow + Visium. TBDs and references filled; body about <span class=num>1,600</span> words, over the 1,500 limit. Each student writes their own text." },
+  { id: "A12", name: "Same-person cell matching", sub: "unbalanced OT, job 327374", st: "done",
     d: "First run: ASC → own STM <span class=num>11/14</span>, SSC → own ABS <span class=num>9/10</span>, same over 5 settings. Positive control: polyp ABS/GOB/TAC/CT/EE/TUF → same normal type <span class=num>0.81–0.94</span>. Lesion states least matched in <span class=num>23/24</span>. Own-vs-other cost weak (10/33). Next: shuffled-label null, leave-one-donor-out." },
   { id: "A13", name: "Marker check", sub: "Cell_Type labels", st: "done",
     d: "Labels supported in both objects; SSC carries gastric markers 4/4; stem markers peak in ASC, then STM." },
@@ -166,7 +166,7 @@ const ARMS = [
   { id: "A15", name: "Next 1 · Person-free model", sub: "scVI, job 338312", st: "done",
     d: "scVI with person as batch key: healthy cells' same-person neighbours <span class=num>0.45→0.30</span> (DIS), <span class=num>0.51→0.28</span> (VAL), chance 0.07; polyp 0.72→0.39 / 0.68→0.50. ASC and SSC stay apart (<span class=num>0.95</span> same-label neighbours) and form one island each. Still 4× chance; scVI without the person key clumps more than PCA. fig18." },
   { id: "A16", name: "Next 2 · Polyp as odd one out", sub: "leave-one-person-out, job 338313", st: "done",
-    d: "Trained on other people's healthy cells only: polyp vs own healthy median AUROC <span class=num>0.66</span> conventional, <span class=num>0.73</span> serrated (scVI); PCA as good. SSC is the least healthy-like state (0.99), ASC is not (new-cell AUROC 0.56): stem-like. Fails on polyps with ~no new cells. fig19." },
+    d: "Trained on other people's healthy cells only: polyp vs own healthy median AUROC <span class=num>0.66</span> conventional, <span class=num>0.73</span> serrated (scVI); PCA as good. SSC is the least healthy-like state (0.99), ASC is not (new-cell AUROC 0.56): stem-like. Fails on polyps with ~no new cells. fig19. <b>v2</b> (jobs 341132/341133, detected genes, KL warm-up fixed): raw error tracks depth (ρ −0.94), so it is depth-adjusted within person. Depth-adjusted error finds ASC (<span class=num>0.78</span>), hidden-layer distance finds SSC (<span class=num>0.85</span>); polyp vs own healthy median <span class=num>0.71 / 0.67</span> (combined). Worst-rebuilt genes are the route genes (NKD1, APCDD1 / TFF1, MUC5AC, CTSE). Open: depth calibration inside the script; fig22 shows raw error." },
   { id: "A17", name: "Next 3 · Healthy → polyp flow", sub: "OT + flow matching, job 338315", st: "done",
     d: "From a held-out person's healthy cells: beats 'unchanged' <span class=num>23/33</span>, right route closer <span class=num>25/33</span>; but loses to other people's polyps (8/33), ties a mean shift (14/33), growth term adds nothing, new-cell shares not reproduced. Negative so far. fig20." },
   { id: "A18", name: "Next 4 · Single cells onto tissue", sub: "DestVI, job 338316", st: "done",
@@ -207,8 +207,16 @@ const JOBS = [
   ["338313", "anomaly score, leave-one-person-out", "COMPLETED"],
   ["338315", "healthy → polyp flow", "COMPLETED"],
   ["338316", "DestVI Visium mapping", "COMPLETED"],
+  ["341131", "anomaly v2, test", "COMPLETED"],
+  ["341132–33", "anomaly v2, hvg + detected genes", "COMPLETED"],
+  ["341546, 341957/59", "storage migration scan + path rewrite", "COMPLETED"],
+  ["341954–55", "/nfs-stor reachability, cpu + gpu", "COMPLETED"],
 ];
 const LOG = [
+  ["10-25", "Progress report PDF exported (scripts/report_to_pdf.py): 5 pages of text and figures + 1 page of references; body ≈1,468 words."],
+  ["10-25", "Progress report: Figure 1 redrawn as the pipeline (VAE, unbalanced OT + flow, detailed Visium/DestVI); label-free UMAP and person highlight added as Fig 2; Fig 5 now flow + the three Visium sections where the own reference wins. Positive results only in the report; negatives stay in the weekly report."],
+  ["10-25", "Storage moved from /l/users to /nfs-stor (HPC Phase 2): all paths, symlinks and envs rewritten, every Python env tested, final sync 0 files. HTA11 env exported to env/. Therapeutic pushed to GitHub."],
+  ["10-24", "Anomaly v2 (jobs 341132/341133): depth-adjusted error finds ASC, hidden-layer distance finds SSC. Progress report draft_v1 written (owner's three-step story)."],
   ["10-23 14:49", "Four next-step models implemented and run (jobs 338312–338316): person-free scVI works partially; anomaly score moderate; flow negative vs population baseline; DestVI reads route 6/7, no spread. Report 10-23 sections, figs 18–21."],
   ["10-22 06:10", "Deck: first-test design slide, label source explained, person-highlight figure + interactive explorer, spatial plan slide. Correction: all 6 Visium donors are in our scRNA (zero-padded IDs)."],
   ["10-22 05:40", "Deck slides 5+ simplified to 7 slides: steps cut, matching + gene check merged, single cell and tissue side by side, short next steps. White, plain format."],

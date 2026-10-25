@@ -6,7 +6,7 @@ Measured results only, with provenance; include positive and negative findings.
 
 ## 2026-10-19 — First paired analysis end to end: composition, DE, route split, replication, Visium
 
-All numbers from tables under `/l/users/yuqi.lei/HTA11/derived/` (not in git; regenerate
+All numbers from tables under `/nfs-stor/yuqi.lei/HTA11/derived/` (not in git; regenerate
 with the scripts named). Figures in `figures/` via `scripts/make_figures.py`. Slurm jobs:
 325071 (pseudobulk), 325099 (OSF download), 325107 (paired analysis), 325109 (Visium).
 Methods: [10_23_record.md](10_23_record.md).
@@ -154,7 +154,7 @@ MSI 272 / TA-TVA 454 / SSL-HP 389 cells (4,604 NA).
 ## 2026-10-20 — Hypothesis checks X1–X6: does the route live in the departure from the donor's own normal?
 
 Scripts `scripts/hypothesis_checks.py` (job 327343) and `scripts/pairing_benefit.py`
-(job 327354); outputs `/l/users/yuqi.lei/HTA11/derived/hypothesis/`. Pseudobulk only;
+(job 327354); outputs `/nfs-stor/yuqi.lei/HTA11/derived/hypothesis/`. Pseudobulk only;
 specimens or specimen×state groups with ≥30 cells; similarity = Pearson r on log-CPM
 of the 2,000 most variable genes. Reasoning in [10_23_record.md](10_23_record.md).
 
@@ -238,7 +238,7 @@ Midterm deck rebuilt to 11 slides (story order), same URL; sources in
 ## 2026-10-20 — Step 4 first run: same-person cell matching (unbalanced OT); marker check
 
 `scripts/cell_matching.py` (test job 327373, full job 327374) →
-`/l/users/yuqi.lei/HTA11/derived/cell_matching/cm_{mapping,matched,cross}.tsv`.
+`/nfs-stor/yuqi.lei/HTA11/derived/cell_matching/cm_{mapping,matched,cross}.tsv`.
 Per object: 2,000 HVGs (MT-/RPL/RPS excluded) on a 30k-cell subsample, z-scored, 30 PCs
 (variance 23 % DIS, 21 % VAL). Per donor × route: up to 2,000 polyp cells (source) vs up to
 2,000 of the same donor's normal cells (target); log-domain unbalanced Sinkhorn, cost =
@@ -303,7 +303,7 @@ STM markers (LGR5, OLFM4, SMOC2, ASCL2) peak in **ASC**, with STM second (DIS z:
 | `figures/fig9_he_conventional.png` | 8270_1 (HTA11_07862), left tissue piece | TA/TVA, sigmoid | 406 (`adenoma` + `adenoma_border`) | OSF `ST_master/8270_1_HTA11_07862_master.h5ad`, hires H&E |
 | `figures/fig9_he_serrated.png` | 8270_5 (HTA11_06134), whole strip | SSL/HP, sigmoid | 86 | OSF `ST_master/8270_5_HTA11_06134_master.h5ad`, hires H&E |
 
-`python scripts/make_he_panels.py /l/users/$USER/HTA11/data/osf_hftq2/ST_master figures`
+`python scripts/make_he_panels.py /nfs-stor/$USER/HTA11/data/osf_hftq2/ST_master figures`
 (seconds, login node). Descriptive only: the conventional section is a thick crowded mass of
 glands; the serrated section is a thin flat strip with normal mucosa between two polyp areas,
 saw-tooth lumens visible in the upper polyp area. Rotated 90° clockwise for the slide.

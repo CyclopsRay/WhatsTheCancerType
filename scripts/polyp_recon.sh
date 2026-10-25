@@ -8,12 +8,12 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=12:00:00
-#SBATCH --output=/l/users/yuqi.lei/HTA11/logs/polyp_recon_%j.out
-#SBATCH --error=/l/users/yuqi.lei/HTA11/logs/polyp_recon_%j.err
+#SBATCH --output=/nfs-stor/yuqi.lei/HTA11/logs/polyp_recon_%j.out
+#SBATCH --error=/nfs-stor/yuqi.lei/HTA11/logs/polyp_recon_%j.err
 
 set -euo pipefail
-[ -d /l/users/yuqi.lei/HTA11/data ] || { echo "/l not mounted on $(hostname); resubmit with --exclude"; exit 1; }
+[ -d /nfs-stor/yuqi.lei/HTA11/data ] || { echo "/l not mounted on $(hostname); resubmit with --exclude"; exit 1; }
 cd /home/yuqi.lei/HTA11/scripts
-D=/l/users/yuqi.lei/HTA11
-/l/users/yuqi.lei/venvs/hta11/bin/python polyp_recon.py \
+D=/nfs-stor/yuqi.lei/HTA11
+/nfs-stor/yuqi.lei/venvs/hta11/bin/python polyp_recon.py \
   $D/data/vanderbilt_cellxgene $D/derived/pseudobulk $D/derived/anomaly /home/yuqi.lei/HTA11/figures "$@"

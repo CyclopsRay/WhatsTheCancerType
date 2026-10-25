@@ -13,13 +13,13 @@ record holds the provenance for the first end-to-end run; results are in
 - `osf_download_list.tsv` — the 11 OSF files fetched by `scripts/download_osf_subset.sh`
   (7 Visium polyp captures, NMF spectra, `abnormal_epithelium.h5ad`, WES MAF + clinical).
 
-## Pipeline (all via Slurm, env `/l/users/yuqi.lei/venvs/hta11`)
+## Pipeline (all via Slurm, env `/nfs-stor/yuqi.lei/venvs/hta11`)
 
-| Step | Script | Output under `/l/users/yuqi.lei/HTA11/` |
+| Step | Script | Output under `/nfs-stor/yuqi.lei/HTA11/` |
 |---|---|---|
 | Pseudobulk, composition, cell QC | `scripts/build_pseudobulk.sh` | `derived/pseudobulk/` |
 | OSF subset download, md5 checked | `scripts/download_osf_subset.sh` | `data/osf_hftq2/` |
 | Paired composition, PyDESeq2, route split, GSEA, donor consistency | `scripts/paired_analysis.sh` | `derived/paired/` |
 | Replication only, from saved tables | `python scripts/paired_analysis.py --replicate derived/paired` | `derived/paired/replication_summary.tsv` |
 | Visium signature scoring | `scripts/visium_scoring.sh` | `derived/visium/` |
-| Figures | `python scripts/make_figures.py /l/users/yuqi.lei/HTA11/derived figures` | `figures/` (in git) |
+| Figures | `python scripts/make_figures.py /nfs-stor/yuqi.lei/HTA11/derived figures` | `figures/` (in git) |

@@ -7,10 +7,10 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=48G
 #SBATCH --time=01:30:00
-#SBATCH --output=/l/users/yuqi.lei/HTA11/logs/labelfree_%j.out
-#SBATCH --error=/l/users/yuqi.lei/HTA11/logs/labelfree_%j.err
+#SBATCH --output=/nfs-stor/yuqi.lei/HTA11/logs/labelfree_%j.out
+#SBATCH --error=/nfs-stor/yuqi.lei/HTA11/logs/labelfree_%j.err
 
 set -euo pipefail
-D=/l/users/yuqi.lei/HTA11
-/l/users/yuqi.lei/venvs/hta11/bin/python /home/yuqi.lei/HTA11/scripts/label_free_view.py \
+D=/nfs-stor/yuqi.lei/HTA11
+/nfs-stor/yuqi.lei/venvs/hta11/bin/python /home/yuqi.lei/HTA11/scripts/label_free_view.py \
   $D/data/vanderbilt_cellxgene $D/derived/pseudobulk $D/derived/label_free /home/yuqi.lei/HTA11/figures

@@ -73,8 +73,13 @@
 - **HP polyps carry SSC like SSL** (median 17–22 % vs 16–23 % of epithelium), so
   pooling HP with SSL as "serrated" is compositionally supported.
 - No R on this host. DESeq2 runs through PyDESeq2 0.5.2 in
-  `/l/users/yuqi.lei/venvs/hta11` (venv over the promotervi env, adds pydeseq2, gseapy).
-  No node.js either. Hallmark GMT cached at `/l/users/yuqi.lei/HTA11/data/genesets/`.
+  `/nfs-stor/yuqi.lei/venvs/hta11` (venv over the promotervi env, adds pydeseq2, gseapy).
+  No node.js either. Hallmark GMT cached at `/nfs-stor/yuqi.lei/HTA11/data/genesets/`.
+- **Storage moved from `/l/users/yuqi.lei` to `/nfs-stor/yuqi.lei` on 2026-10-25** (HPC
+  Phase 2; `/l` cleared after 10-26). The envs were copied, not rebuilt. Their text prefixes were
+  rewritten, but about 200 conda `.so`/tools still carry `/l/users` defaults compiled in (openssl,
+  terminfo, tcl, Qt). If an env fails on a missing `/l/users/...` path, rebuild it rather than
+  patching the binary: the new prefix is one character longer.
 - OSF `scRNA/abnormal_epithelium.h5ad` (42 MB) has MSS/MSI labels on malignant
   epithelium (`Tumor_Type` MSS 2,434 / MSI 272 cells) but `X` is not raw counts.
 

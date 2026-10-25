@@ -89,3 +89,17 @@ their top 30 by deviance rise, polyp minus own healthy; `recon_genes_detected.ts
   (TFF1, MUC5AC, CTSE). Both match the 10-19 route-specific DE genes. Shared top genes (S100P,
   REG4) match the 10-19 shared-up list. Noise: HBB, ACTB, EEF1A1 appear in a few people.
 - fig22 plots the **raw** (depth-confounded) error and should not be used as is.
+
+## 2026-10-25 — Progress-report figures (no new analysis)
+
+`scripts/make_report_figures.py DERIVED figures` → `figures/report_fig1–5.png`, used in
+`presentation/progress_report/draft_v1.md`. Every number drawn comes from an existing table:
+
+| Figure | Content | Source |
+|---|---|---|
+| 1 | Pipeline schematic (VAE, unbalanced OT + flow, Visium/DestVI) | synthetic shapes, no data |
+| 2a / 2b / 2c | New-cell shares; route-specific genes; DIS→VAL replication | `fig8_new_cells.png`, `fig3_route_compare_DIS_all.png`, `fig4_replication.png` (10-19 / 10-22 runs) |
+| 3a | New cells vs other polyp cells, AUROC per person: depth-adjusted error ASC 0.78, SSC 0.50; hidden-layer distance ASC 0.66, SSC 0.85 (medians, detected genes) | `derived/anomaly/recon_depth_adjusted.tsv` (10-24 section above) |
+| 3b | Stem vs mature scores | `fig14_stem_mature.png` |
+| 4 | Distance to the real polyp: unchanged vs flow + growth vs wrong route; 23 / 33 closer than unchanged, 25 / 33 right beats wrong | `derived/flow/flow_people.tsv` (10-23 report, job 338315) |
+| 5 | 4 Visium sections: annotation, marker call, polyp-only share with own vs other reference; AUC own / other 0.62/0.47, 0.66/0.54, 0.64/0.57, 0.85/0.92 | `derived/visium_mapping/props_*`, `mapping_summary.tsv` (10-23 report, job 338316) |

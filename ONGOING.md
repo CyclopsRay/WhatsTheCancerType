@@ -11,6 +11,8 @@ Live board of every arm: [HTA11 Arms Console](https://claude.ai/artifact/EAd4sS1
   their own text; numbers and figures from `report/10_23_report.md` and `figures/`.
   Draft v1 (owner revises by hand): `presentation/progress_report/draft_v1.md`; framing notes in
   [10_30_record.md](report/10_30_record.md).
+  10-25: positive results only; five figures from `scripts/make_report_figures.py` are in the draft.
+  Open: body ≈1,600 words (limit 1,500), 3–5 page limit, final export format, references check.
 - Instructors asked the team to meet one of them about feasibility.
 
 ## Just finished, still being analysed (2026-10-19)

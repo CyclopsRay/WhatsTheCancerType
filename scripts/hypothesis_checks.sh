@@ -7,11 +7,11 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=16G
 #SBATCH --time=00:30:00
-#SBATCH --output=/l/users/yuqi.lei/HTA11/logs/hypo_%j.out
-#SBATCH --error=/l/users/yuqi.lei/HTA11/logs/hypo_%j.err
+#SBATCH --output=/nfs-stor/yuqi.lei/HTA11/logs/hypo_%j.out
+#SBATCH --error=/nfs-stor/yuqi.lei/HTA11/logs/hypo_%j.err
 
 set -euo pipefail
-/l/users/yuqi.lei/venvs/hta11/bin/python /home/yuqi.lei/HTA11/scripts/hypothesis_checks.py \
-  /l/users/yuqi.lei/HTA11/derived/pseudobulk \
-  /l/users/yuqi.lei/HTA11/derived/paired \
-  /l/users/yuqi.lei/HTA11/derived/hypothesis
+/nfs-stor/yuqi.lei/venvs/hta11/bin/python /home/yuqi.lei/HTA11/scripts/hypothesis_checks.py \
+  /nfs-stor/yuqi.lei/HTA11/derived/pseudobulk \
+  /nfs-stor/yuqi.lei/HTA11/derived/paired \
+  /nfs-stor/yuqi.lei/HTA11/derived/hypothesis

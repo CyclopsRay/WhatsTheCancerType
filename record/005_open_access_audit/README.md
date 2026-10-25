@@ -15,7 +15,7 @@ demographics and therapy tables. 3,340 rows carry `atlasid == HTA11`
 192 cases / 429 biospecimens). Each row exposes `level`, `downloadSource`,
 `isRawSequencing`, `biospecimenIds` and `viewers`, so access tier is read from
 the release rather than inferred. A local copy is kept at
-`/l/users/yuqi.lei/HTA11/data/htan_portal/processed_syn_data.json`.
+`/nfs-stor/yuqi.lei/HTA11/data/htan_portal/processed_syn_data.json`.
 
 HTA11 diagnosis records are almost entirely `Not Reported`. **Pathology for this
 atlas lives on the biospecimen record**, in `TumorTissueType` plus the ICD-O-3

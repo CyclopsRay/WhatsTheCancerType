@@ -7,11 +7,11 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=32G
 #SBATCH --time=01:00:00
-#SBATCH --output=/l/users/yuqi.lei/HTA11/logs/x6_%j.out
-#SBATCH --error=/l/users/yuqi.lei/HTA11/logs/x6_%j.err
+#SBATCH --output=/nfs-stor/yuqi.lei/HTA11/logs/x6_%j.out
+#SBATCH --error=/nfs-stor/yuqi.lei/HTA11/logs/x6_%j.err
 
 set -euo pipefail
-/l/users/yuqi.lei/venvs/hta11/bin/python /home/yuqi.lei/HTA11/scripts/pairing_benefit.py \
-  /l/users/yuqi.lei/HTA11/derived/pseudobulk \
-  /l/users/yuqi.lei/HTA11/derived/hypothesis \
+/nfs-stor/yuqi.lei/venvs/hta11/bin/python /home/yuqi.lei/HTA11/scripts/pairing_benefit.py \
+  /nfs-stor/yuqi.lei/HTA11/derived/pseudobulk \
+  /nfs-stor/yuqi.lei/HTA11/derived/hypothesis \
   8

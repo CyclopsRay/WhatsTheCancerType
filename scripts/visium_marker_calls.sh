@@ -7,10 +7,10 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=16G
 #SBATCH --time=00:30:00
-#SBATCH --output=/l/users/yuqi.lei/HTA11/logs/vismark_%j.out
-#SBATCH --error=/l/users/yuqi.lei/HTA11/logs/vismark_%j.err
+#SBATCH --output=/nfs-stor/yuqi.lei/HTA11/logs/vismark_%j.out
+#SBATCH --error=/nfs-stor/yuqi.lei/HTA11/logs/vismark_%j.err
 
 set -euo pipefail
-D=/l/users/yuqi.lei/HTA11
-/l/users/yuqi.lei/venvs/hta11/bin/python /home/yuqi.lei/HTA11/scripts/visium_marker_calls.py \
+D=/nfs-stor/yuqi.lei/HTA11
+/nfs-stor/yuqi.lei/venvs/hta11/bin/python /home/yuqi.lei/HTA11/scripts/visium_marker_calls.py \
   $D/data/osf_hftq2/ST_master $D/derived/visium /home/yuqi.lei/HTA11/figures

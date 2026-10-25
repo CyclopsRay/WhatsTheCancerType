@@ -9,10 +9,10 @@ is in [CLAUDE.md](CLAUDE.md); current status in [ONGOING.md](ONGOING.md); durabl
 | Place | Holds | Size |
 |---|---|---|
 | `~/HTA11/` (git) | code (`scripts/`), notes (`record/`, `report/`), figures, slides, console | ~0.5 MB notes + figures |
-| `/l/users/yuqi.lei/HTA11/data/` | downloaded inputs, never edited | 3.7 GB total with `derived/` |
-| `/l/users/yuqi.lei/HTA11/derived/` | everything our scripts compute | ~120 MB |
-| `/l/users/yuqi.lei/HTA11/logs/` | Slurm stdout/stderr, `<name>_<jobid>.out/.err` | small |
-| `/l/users/yuqi.lei/venvs/hta11` | Python env (scanpy, PyDESeq2, gseapy) | — |
+| `/nfs-stor/yuqi.lei/HTA11/data/` | downloaded inputs, never edited | 3.7 GB total with `derived/` |
+| `/nfs-stor/yuqi.lei/HTA11/derived/` | everything our scripts compute | ~120 MB |
+| `/nfs-stor/yuqi.lei/HTA11/logs/` | Slurm stdout/stderr, `<name>_<jobid>.out/.err` | small |
+| `/nfs-stor/yuqi.lei/venvs/hta11` | Python env (scanpy, PyDESeq2, gseapy) | — |
 
 Large data never goes in `$HOME`. Anything heavier than a quick look runs through Slurm
 (`sbatch scripts/<name>.sh`).
